@@ -1,0 +1,5 @@
+packages:
+- bash
+- bash-config
+- vim
+- vim-config
