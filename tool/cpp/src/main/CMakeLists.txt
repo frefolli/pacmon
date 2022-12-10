@@ -1,3 +1,3 @@
 add_executable(main main.cpp)
-target_include_directories(main ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(main ${CONAN_LIBS} libsource)
+target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(main libsource yaml-cpp ${Boost_LIBRARIES})

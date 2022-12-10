@@ -1,0 +1,7 @@
+files:
+  install:
+  - .bashrc
+  support:
+softwares:
+install:
+uninstall:

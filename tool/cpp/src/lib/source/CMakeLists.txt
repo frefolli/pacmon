@@ -1,2 +1,2 @@
-add_library(libsource STATIC)
-target_include_directories(libsource ${CMAKE_CURRENT_SOURCE_DIR}/include)
+add_library(libsource STATIC source.cpp)
+target_include_directories(libsource PUBLIC ${CMAKE_SOURCE_DIR}/include)

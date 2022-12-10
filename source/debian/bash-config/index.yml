@@ -1,0 +1,7 @@
+license: GPL
+description:
+url:
+depends:
+- bash
+versions:
+- 1.0.0

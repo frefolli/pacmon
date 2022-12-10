@@ -7,14 +7,16 @@
 
 ### Types
 
-| name         | type   | node |
-|--------------|--------|------|
-| `<platform>` | string |      |
-| `<package>`  | string |      |
-| `<license>`  | spdx   |      |
-| `<file>`     | string |      |
-| `<software>` | string |      |
-| `<command>`  | string |      |
+| name            | type   | node |
+|-----------------|--------|------|
+| `<platform>`    | string |      |
+| `<package>`     | string |      |
+| `<license>`     | spdx   |      |
+| `<file>`        | string |      |
+| `<software>`    | string |      |
+| `<command>`     | string |      |
+| `<url>`         | string |      |
+| `<description>` | string |      |
 
 ### Source
 
@@ -48,7 +50,6 @@ platforms:
 ##### `/<platform>/index.yml`
 
 ```yaml
-platform: <platform>
 packages:
 - <package>
 - <package>
@@ -58,9 +59,13 @@ packages:
 ##### `/<platform>/<package>/index.yml`
 
 ```yaml
-platform: <package>
-package: <platform>
 license: <license>
+description: <description>
+url: <url>
+depends:
+- <package>
+- <package>
+- <package>
 versions:
 - <version>
 - <version>
@@ -70,10 +75,6 @@ versions:
 ##### `/<platform>/<package>/<version>/index.yml`
 
 ```yaml
-platform: <platform>
-package: <package>
-license: <license>
-version: <version>
 files:
     install:
     - <file>

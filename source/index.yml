@@ -1,3 +1,4 @@
-packages:
-- bash
-- bash-config
+platforms:
+  - arch
+  - debian
+  - fedora

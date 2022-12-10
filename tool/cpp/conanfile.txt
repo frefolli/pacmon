@@ -1,5 +1,0 @@
-[requires]
-yaml-cpp/0.7.0
-
-[generators]
-cmake
