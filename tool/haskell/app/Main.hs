@@ -10,7 +10,6 @@ join _ [x] = x
 join sep (x:y:xs) = append x $ append sep $ join sep (y:xs)
 
 f = do
-    -- SourceIndex.dumpToFile (SourceIndex.new ["bash", "bash-config", "vim", "vim-config"]) "monad.yml"
     let plist = SourceIndex.packages <$> SourceIndex.parseFromFile "../source/index.yml" in
         join " " <$> plist
 
