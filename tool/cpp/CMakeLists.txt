@@ -18,7 +18,4 @@ endif()
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-# add_subdirectory(src/lib)
-add_subdirectory(src/main)
-
-# target_link_libraries(lib PUBLIC ${CONAN_LIBS})
+add_subdirectory(src)
