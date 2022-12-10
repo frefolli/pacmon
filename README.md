@@ -36,7 +36,7 @@
 | `/<platform>/<package>/index.yml`           |       |
 | `/<platform>/<package>/<version>/index.yml` |       |
 
-##### `/index.yml
+##### `/index.yml`
 
 ```yaml
 platforms:
@@ -45,7 +45,7 @@ platforms:
 - <platform>
 ```
 
-##### `/<platform>/index.yml
+##### `/<platform>/index.yml`
 
 ```yaml
 platform: <platform>
@@ -55,7 +55,7 @@ packages:
 - <package>
 ```
 
-##### `/<platform>/<package>/index.yml
+##### `/<platform>/<package>/index.yml`
 
 ```yaml
 platform: <package>
@@ -67,7 +67,7 @@ versions:
 - <version>
 ```
 
-##### `/<platform>/<package>/<version>/index.yml
+##### `/<platform>/<package>/<version>/index.yml`
 
 ```yaml
 platform: <platform>
