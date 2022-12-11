@@ -5,8 +5,7 @@
 #include<stdexcept>
 #include<algorithm>
 
-lib::source::Source::Source(std::string path) {
-  this->path = path;
+lib::source::Source::Source(std::string path) : lib::types::IndexFile(path) {
   this->load();
 }
 
@@ -64,23 +63,25 @@ std::string lib::source::Source::toString() {
 }
 
 void lib::source::Source::load() {
-  YAML::Node document = YAML::LoadFile(this->path + "/index.yml");
-  if (! document["platforms"])
-    throw new std::runtime_error("source index file is empty or doesn't exists");
-
-  YAML::Node platforms = document["platforms"];
-  if (! platforms.Type() == YAML::NodeType::Sequence)
-    throw new std::runtime_error("wrong source index file format");
+  YAML::Node document;
+  try {
+    document = YAML::LoadFile(this->getIndexPath());
+  } catch(...) {
+    throw new std::runtime_error("couldn't load source index file: " + this->getIndexPath() + " doesn't exists");
+  }
 
   this->platforms = new std::vector<std::string>();
-  for (YAML::const_iterator it = platforms.begin(); it != platforms.end(); it++)
-    this->platforms->push_back(it->as<std::string>());
+  if (document["platforms"]) {
+    YAML::Node platforms = document["platforms"];
+    for (YAML::const_iterator it = platforms.begin(); it != platforms.end(); it++)
+      this->platforms->push_back(it->as<std::string>());
+  }
 }
 
 void lib::source::Source::dump() {
   YAML::Node document;
   for (auto it = this->platforms->begin(); it != this->platforms->end(); it++)
     document["platforms"].push_back(*it);
-  std::ofstream output; output.open(this->path + "/index.yml");
+  std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
 }

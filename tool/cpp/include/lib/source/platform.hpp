@@ -3,12 +3,12 @@
 
 #include<string>
 #include<vector>
+#include<lib/types/index_file.hpp>
 
 namespace lib::source {
-  class Platform {
+  class Platform : public lib::types::IndexFile {
   private:
     std::vector<std::string>* packages = NULL;
-    std::string path;
 
     std::vector<std::string>::iterator findPackage(std::string package);
     void load();

@@ -1,15 +1,10 @@
-@all:
+@all: build/src/main/main
+
+build/src/main/main: src
+	sh ./build.sh
 
 clean:
-	rm -rf build
-
-compile:
-	cd build && cmake .. && cmake --build . && cd ..
-
-build:
-	mkdir build
-
-build/src/main/main: build compile
+	rm -rf build dist
 
 run: build/src/main/main
 	./build/src/main/main

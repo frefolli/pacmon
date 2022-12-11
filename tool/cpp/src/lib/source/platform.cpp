@@ -5,8 +5,7 @@
 #include<stdexcept>
 #include<algorithm>
 
-lib::source::Platform::Platform(std::string path) {
-  this->path = path;
+lib::source::Platform::Platform(std::string path) : lib::types::IndexFile(path) {
   this->load();
 }
 
@@ -64,12 +63,14 @@ std::string lib::source::Platform::toString() {
 }
 
 void lib::source::Platform::load() {
-  YAML::Node document = YAML::LoadFile(this->path + "/index.yml");
-  if (! document["packages"])
-    throw new std::runtime_error("source index file is empty or doesn't exists");
-
+    YAML::Node document;
+  try {
+    document = YAML::LoadFile(this->getIndexPath());
+  } catch(...) {
+    throw new std::runtime_error("");
+  }
   YAML::Node packages = document["packages"];
-  if (! packages.Type() == YAML::NodeType::Sequence)
+  if (packages.Type() != YAML::NodeType::Sequence)
     throw new std::runtime_error("wrong source index file format");
 
   this->packages = new std::vector<std::string>();
@@ -81,6 +82,6 @@ void lib::source::Platform::dump() {
   YAML::Node document;
   for (auto it = this->packages->begin(); it != this->packages->end(); it++)
     document["packages"].push_back(*it);
-  std::ofstream output; output.open(this->path + "/index.yml");
+  std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
 }

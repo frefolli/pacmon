@@ -3,12 +3,12 @@
 
 #include<string>
 #include<vector>
+#include<lib/types/index_file.hpp>
 
 namespace lib::source {
-  class Source {
+  class Source : public lib::types::IndexFile {
   private:
     std::vector<std::string>* platforms = NULL;
-    std::string path;
 
     std::vector<std::string>::iterator findPlatform(std::string platform);
     void load();

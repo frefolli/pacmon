@@ -3,15 +3,11 @@
 lib::types::Semver::Semver(long unsigned int major,
                             long unsigned int minor,
                             long unsigned int patch) {
-    this->major = major;
-    this->minor = minor;
-    this->patch = patch;
+    this->setAll(major, minor, patch);
 }
 
 lib::types::Semver::Semver(std::string semver) {
-    this->major = 1;
-    this->minor = 0;
-    this->patch = 0;
+    this->setAll(semver);
 }
 
 long unsigned int lib::types::Semver::getMajor() {
@@ -24,6 +20,30 @@ long unsigned int lib::types::Semver::getMinor() {
 
 long unsigned int lib::types::Semver::getPatch() {
     return this->patch;
+}
+
+void lib::types::Semver::setMajor(long unsigned int major) {
+    this->major = major;
+}
+
+void lib::types::Semver::setMinor(long unsigned int minor) {
+    this->minor = minor;
+}
+
+void lib::types::Semver::setPatch(long unsigned int patch) {
+    this->patch = patch;
+}
+
+void lib::types::Semver::setAll(long unsigned int major,
+                                long unsigned int minor,
+                                long unsigned int patch) {
+    this->setMajor(major);
+    this->setMinor(minor);
+    this->setPatch(patch);
+}
+
+void lib::types::Semver::setAll(std::string semver) {
+    this->setAll(1, 0, 0);
 }
 
 bool lib::types::Semver::operator>(Semver other) {

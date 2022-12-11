@@ -5,8 +5,7 @@
 #include<stdexcept>
 #include<algorithm>
 
-lib::source::Package::Package(std::string path) {
-  this->path = path;
+lib::source::Package::Package(std::string path) : lib::types::IndexFile(path) {
   this->load();
 }
 
@@ -54,8 +53,75 @@ bool lib::source::Package::containsVersion(lib::types::Semver version) {
   return it != this->versions->end();
 }
 
+long unsigned int lib::source::Package::getNumberOfDependencies() {
+    return this->depends->size();
+}
+
+std::string lib::source::Package::getDependency(long unsigned int which) {
+    if (which > this->getNumberOfDependencies())
+        throw new std::runtime_error("index out of range");
+      return this->depends->at(which);    
+}
+
+void lib::source::Package::addDependency(std::string dependency) {
+  if (this->containsDependency(dependency))
+    throw new std::runtime_error("such dependency already exists");
+  this->depends->push_back(dependency);
+  this->dump();
+}
+
+void lib::source::Package::deleteDependency(std::string dependency) {
+if (!(this->containsDependency(dependency)))
+    throw new std::runtime_error("such dependency doesn't exists");
+  this->depends->erase(this->findDependency(dependency));
+  this->dump();
+}
+
+void lib::source::Package::renameDependency(std::string dependency, std::string newname) {
+    if (this->containsDependency(newname))
+        throw new std::runtime_error("such dependency already exists");
+      if (!(this->containsDependency(dependency)))
+        throw new std::runtime_error("such dependency doesn't exists");
+      auto it = this->findDependency(dependency);
+      *it = newname;
+      this->dump();
+}
+
+bool lib::source::Package::containsDependency(std::string dependency) {
+  auto it = this->findDependency(dependency);
+  return it != this->depends->end();
+}
+
 std::vector<lib::types::Semver>::iterator lib::source::Package::findVersion(lib::types::Semver version) {
   return std::find(this->versions->begin(), this->versions->end(), version);
+}
+
+std::vector<std::string>::iterator lib::source::Package::findDependency(std::string dependency) {
+  return std::find(this->depends->begin(), this->depends->end(), dependency);
+}
+
+void lib::source::Package::setUrl(std::string url) {
+    this->url = url;
+}
+
+void lib::source::Package::setDescription(std::string description) {
+    this->description = description;
+}
+
+void lib::source::Package::setLicense(std::string license) {
+    this->license = license;
+}
+
+std::string lib::source::Package::getUrl() {
+    return this->url;
+}
+
+std::string lib::source::Package::getDescription() {
+    return this->description;
+}
+
+std::string lib::source::Package::getLicense() {
+    return this->license;
 }
 
 std::string lib::source::Package::toString() {
@@ -72,30 +138,19 @@ std::string lib::source::Package::toString() {
 }
 
 void lib::source::Package::load() {
-  YAML::Node document = YAML::LoadFile(this->path + "/index.yml");
-  if (! document["versions"])
-    throw new std::runtime_error("source index file is empty or doesn't exists");
-  if (! document["depends"])
-    throw new std::runtime_error("source index file is empty or doesn't exists");
-  if (! document["url"])
-    throw new std::runtime_error("source index file is empty or doesn't exists");
-  if (! document["description"])
-    throw new std::runtime_error("source index file is empty or doesn't exists");
-  if (! document["license"])
-    throw new std::runtime_error("source index file is empty or doesn't exists");
+  YAML::Node document;
+  try {
+    document = YAML::LoadFile(this->getIndexPath());
+  } catch(...) {
+    throw new std::runtime_error("");
+  }
 
   YAML::Node versions = document["versions"];
-  if (! versions.Type() == YAML::NodeType::Sequence)
-    throw new std::runtime_error("wrong source index file format");
-
   this->versions = new std::vector<lib::types::Semver>();
   for (YAML::const_iterator it = versions.begin(); it != versions.end(); it++)
     this->versions->push_back(lib::types::Semver(it->as<std::string>()));
 
   YAML::Node depends = document["depends"];
-  if (! versions.Type() == YAML::NodeType::Sequence)
-    throw new std::runtime_error("wrong source index file format");
-
   this->depends = new std::vector<std::string>();
   for (YAML::const_iterator it = depends.begin(); it != depends.end(); it++)
     this->depends->push_back(it->as<std::string>());
@@ -115,6 +170,6 @@ void lib::source::Package::dump() {
   document["description"] = this->description;
   document["license"] = this->license;
   
-  std::ofstream output; output.open(this->path + "/index.yml");
+  std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
 }
