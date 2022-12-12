@@ -12,8 +12,8 @@ namespace lib::source {
     lib::types::StringList* filesToInstall = NULL;
     lib::types::StringList* filesAsSupport = NULL;
     lib::types::StringList* softwares = NULL;
-    lib::types::StringList* installScript = NULL;
-    lib::types::StringList* uninstallScript = NULL;
+    lib::types::StringList* installCommands = NULL;
+    lib::types::StringList* uninstallCommands = NULL;
 
     void load();
     void dump();

@@ -1,6 +1,7 @@
 #include<lib/source/source.hpp>
 #include<lib/source/platform.hpp>
 #include<lib/source/package.hpp>
+#include<lib/source/version.hpp>
 #include<stdexcept>
 #include<iostream>
 
@@ -22,6 +23,12 @@ int main() {
         std::string packageName = platform->getPackage(j);
         lib::source::Package* package = new lib::source::Package(path + "/" + platformName + "/" + packageName);
         println(package->toString());
+        for (int j = 0; j < package->getNumberOfVersions(); j++) {
+          lib::types::Semver semver = package->getVersion(j);
+          lib::source::Version* version = new lib::source::Version(path + "/" + platformName + "/" + packageName + "/" + semver.toString());
+          println(version->toString());
+          delete version;
+        }
         delete package;
       }
       delete platform;

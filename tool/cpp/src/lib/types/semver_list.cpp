@@ -58,7 +58,7 @@ bool lib::types::SemverList::contains(lib::types::Semver semver) {
 }
 
 std::string lib::types::SemverList::toString() {
-    std::string rep = "(types::semver-list";
+    std::string rep = "(types:semver-list";
     std::vector<std::string> semverStrings;
     for (auto it = this->semvers->begin(); it != this->semvers->end(); it++)
         semverStrings.push_back(it->toString());

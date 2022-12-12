@@ -59,7 +59,7 @@ bool lib::types::StringList::contains(std::string string) {
 }
 
 std::string lib::types::StringList::toString() {
-    std::string rep = "(types::string-list";
+    std::string rep = "(types:string-list";
     rep += " :strings '(" + boost::algorithm::join(*(this->strings), " ") + ")";
     return rep + ")";
 }
