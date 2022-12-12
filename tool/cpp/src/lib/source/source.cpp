@@ -18,48 +18,32 @@ long unsigned int lib::source::Source::getNumberOfPlatforms() {
 }
 
 std::string lib::source::Source::getPlatform(long unsigned int which) {
-  if (which > this->getNumberOfPlatforms())
-    throw new std::runtime_error("index out of range");
-  return this->platforms->at(which);
+    return this->platforms->get(which);
 }
 
 void lib::source::Source::addPlatform(std::string platform) {
-  if (this->containsPlatform(platform))
-    throw new std::runtime_error("such platform already exists");
-  this->platforms->push_back(platform);
+    this->platforms->add(platform);
   this->dump();
 }
 
 void lib::source::Source::deletePlatform(std::string platform) {
-  if (!(this->containsPlatform(platform)))
-    throw new std::runtime_error("such platform doesn't exists");
-  this->platforms->erase(this->findPlatform(platform));
+    this->platforms->del(platform);
   this->dump();
 }
 
 void lib::source::Source::renamePlatform(std::string platform, std::string newname) {
-  if (this->containsPlatform(newname))
-    throw new std::runtime_error("such platform already exists");
-  if (!(this->containsPlatform(platform)))
-    throw new std::runtime_error("such platform doesn't exists");
-  auto it = this->findPlatform(platform);
-  *it = newname;
+    this->platforms->set(platform, newname);
   this->dump();
 }
 
 bool lib::source::Source::containsPlatform(std::string platform) {
-  auto it = this->findPlatform(platform);
-  return it != this->platforms->end();
-}
-
-std::vector<std::string>::iterator lib::source::Source::findPlatform(std::string platform) {
-  return std::find(this->platforms->begin(), this->platforms->end(), platform);
+    return this->platforms->contains(platform);
 }
 
 std::string lib::source::Source::toString() {
-  std::string string = "(source:source :platforms '(";
-  string += boost::algorithm::join(*(this->platforms), " ");
-  return string + "))";
+  std::string string = "(source:source";
+  string += " :platforms " + this->platforms->toString();
+  return string + ")";
 }
 
 void lib::source::Source::load() {
@@ -70,18 +54,15 @@ void lib::source::Source::load() {
     throw new std::runtime_error("couldn't load source index file: " + this->getIndexPath() + " doesn't exists");
   }
 
-  this->platforms = new std::vector<std::string>();
+  this->platforms = new lib::types::StringList();
   if (document["platforms"]) {
-    YAML::Node platforms = document["platforms"];
-    for (YAML::const_iterator it = platforms.begin(); it != platforms.end(); it++)
-      this->platforms->push_back(it->as<std::string>());
+    this->platforms->load(document["platforms"]);
   }
 }
 
 void lib::source::Source::dump() {
   YAML::Node document;
-  for (auto it = this->platforms->begin(); it != this->platforms->end(); it++)
-    document["platforms"].push_back(*it);
+  document["platforms"] = this->platforms->dump();
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
 }

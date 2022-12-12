@@ -4,13 +4,13 @@
 #include<string>
 #include<vector>
 #include<lib/types/index_file.hpp>
+#include<lib/types/string_list.hpp>
 
 namespace lib::source {
   class Source : public lib::types::IndexFile {
   private:
-    std::vector<std::string>* platforms = NULL;
+      lib::types::StringList* platforms = NULL;
 
-    std::vector<std::string>::iterator findPlatform(std::string platform);
     void load();
     void dump();
   public:

@@ -5,16 +5,16 @@
 #include<vector>
 #include<lib/types/semver.hpp>
 #include<lib/types/index_file.hpp>
+#include<lib/types/string_list.hpp>
+#include<lib/types/semver_list.hpp>
 
 namespace lib::source {
   class Package : public lib::types::IndexFile {
   private:
-    std::vector<std::string>* depends = NULL;
-    std::vector<lib::types::Semver>* versions = NULL;
+    lib::types::StringList* depends = NULL;
+    lib::types::SemverList* versions = NULL;
     std::string license, url, description;
 
-    std::vector<lib::types::Semver>::iterator findVersion(lib::types::Semver version);
-    std::vector<std::string>::iterator findDependency(std::string dependency);
     void load();
     void dump();
   public:

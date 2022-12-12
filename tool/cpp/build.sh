@@ -2,7 +2,7 @@
 
 # wantNinja="yes"
 # wantClang="yes"
-buildJobs=2
+buildJobs=1
 
 configure() {
     generator="make"
@@ -24,8 +24,8 @@ configure() {
 }
 
 build() {
-    cmake $cmake_flags 
-    $generator -C build $ninja_flags
+    cmake $cmake_flags && $generator -C build $ninja_flags && return 1
+    return 0
 }
 
 package() {
@@ -34,9 +34,7 @@ package() {
 }
 
 main() {
-    configure
-    build
-    package
+    configure && build && package
 }
 
 main

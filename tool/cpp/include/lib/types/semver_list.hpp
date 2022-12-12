@@ -10,7 +10,7 @@ namespace lib::types {
     class SemverList {
         private:
             std::vector<Semver>* semvers = NULL;
-            std::vector<Semver>::iterator findSemver(Semver semver);
+            std::vector<Semver>::iterator find(Semver semver);
         public:
             SemverList();
             ~SemverList();
@@ -21,12 +21,13 @@ namespace lib::types {
             void add(Semver semver);
             void del(Semver semver);
             bool contains(Semver semver);
+            
+            YAML::Node dump();
+            void load(YAML::Node node);
 
             std::string toString();
     };
 
-    YAML::Node& operator>>(YAML::Node& node, SemverList& semverList);
-    YAML::Node& operator<<YAML::Node& node, SemverList& semverList);
 }
 
 #endif

@@ -1,52 +1,79 @@
 #include<lib/types/semver_list.hpp>
+#include<stdexcept>
 
 lib::types::SemverList::SemverList() {
-    // TODO
+    this->semvers = new std::vector<lib::types::Semver>();
 }
 
-lib::types::std::SemverList::~SemverList() {
-    // TODO
+lib::types::SemverList::~SemverList() {
+    delete this->semvers;
 }
 
 std::vector<lib::types::Semver>::iterator
-lib::types::SemverList::findSemver(lib::types::Semver semver) {
-    // TODO
+lib::types::SemverList::find(lib::types::Semver semver) {
+    return std::find(this->semvers->begin(),
+                        this->semvers->end(), semver);
 }
 
-lib::types::SemverList::size() {
-    // TODO
+long unsigned int lib::types::SemverList::size() {
+    return this->semvers->size();
 }
 
 lib::types::Semver
 lib::types::SemverList::get(long unsigned int which) {
-    // TODO
+    if (which < this->size())
+        return this->semvers->at(which);
+    else
+        throw new std::runtime_error("index out of bound");
 }
 
-void lib::types::SemverList::set(lib::types::Semver old_
-                            lib::types::Semver new_) {
-    // TODO
+void lib::types::SemverList::set(lib::types::Semver old_, lib::types::Semver new_) {
+    if (this->contains(new_))
+        throw new std::runtime_error("semver already in list");
+    auto it = this->find(old_);
+    if (it != this->semvers->end())
+        *it = new_;
+    else
+        throw new std::runtime_error("semver not found");
 }
 
 void lib::types::SemverList::add(lib::types::Semver semver) {
-    // TODO
+    if (this->contains(semver))
+        throw new std::runtime_error("semver already in list");
+    else
+        this->semvers->push_back(semver);
 }
 
 void lib::types::SemverList::del(lib::types::Semver semver) {
-    // TODO
+    auto it = this->find(semver);
+    if (it != this->semvers->end())
+        this->semvers->erase(it);
+    else
+        throw new std::runtime_error("semver not found");
 }
 
 bool lib::types::SemverList::contains(lib::types::Semver semver) {
-    // TODO
+    return this->semvers->end() != this->find(semver);
 }
 
 std::string lib::types::SemverList::toString() {
-    // TODO
+    std::string rep = "(types::semver-list";
+    std::vector<std::string> semverStrings;
+    for (auto it = this->semvers->begin(); it != this->semvers->end(); it++)
+        semverStrings.push_back(it->toString());
+    rep += ":semvers '(" + boost::algorithm::join(semverStrings, " ") + ")";
+    return rep + ")";
 }
 
-YAML::Node& operator>>(YAML::Node& node,
-                        lib::types::SemverList& semverList)
+YAML::Node lib::types::SemverList::dump() {
+    YAML::Node node;
+    for (auto it = this->semvers->begin(); it != this->semvers->end(); it++)
+        node.push_back(it->toString());
+    return node;
+}
 
-YAML::Node& operator<<(YAML::Node& node,
-                        lib::types::SemverList& semverList) {
-    // TODO
+void lib::types::SemverList::load(YAML::Node node) {
+    this->semvers->clear();
+    for (YAML::const_iterator it = node.begin(); it != node.end(); it++)
+        this->semvers->push_back(lib::types::Semver(it->as<std::string>()));
 }

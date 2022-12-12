@@ -4,33 +4,20 @@
 #include<string>
 #include<vector>
 #include<lib/types/index_file.hpp>
+#include<lib/types/string_list.hpp>
 
 namespace lib::source {
   class Version : public lib::types::IndexFile {
   private:
-    std::vector<std::string>* filesToInstall;
-    std::vector<std::string>* filesAsSupport;
-    std::vector<std::string>* softwares;
-    std::vector<std::string>* installScript;
-    std::vector<std::string>* uninstallScript;
+    lib::types::StringList* filesToInstall = NULL;
+    lib::types::StringList* filesAsSupport = NULL;
+    lib::types::StringList* softwares = NULL;
+    lib::types::StringList* installScript = NULL;
+    lib::types::StringList* uninstallScript = NULL;
 
     void load();
     void dump();
 
-    std::vector<std::string>::iterator
-    findFileToInstall(std::string file);
-
-    std::vector<std::string>::iterator
-    findFileAsSupport(std::string file);
-
-    std::vector<std::string>::iterator
-    findSoftware(std::string software);
-
-    std::vector<std::string>::iterator
-    findInstallCommand(std::string command);
-
-    std::vector<std::string>::iterator
-    findUninstallCommand(std::string command);
   public:
     Version(std::string path);
     ~Version();

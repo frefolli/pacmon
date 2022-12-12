@@ -1,52 +1,77 @@
 #include<lib/types/string_list.hpp>
+#include<boost/algorithm/string/jon>
+#include<stdexcept>
 
 lib::types::StringList::StringList() {
-    // TODO
+    this->strings = new std::vector<std::string>();
 }
 
 lib::types::StringList::~StringList() {
-    // TODO
+    delete this->strings;
 }
 
-std::vector<lib::types::std::string>::iterator
-lib::types::StringList::findstd::string(lib::types::std::string string) {
-    // TODO
+std::vector<std::string>::iterator
+lib::types::StringList::findstd::string(std::string string) {
+    return std::find(this->strings->begin(),
+                        this->strings->end(), string);
 }
 
 lib::types::StringList::size() {
-    // TODO
+    return this->strings->size();
 }
 
-lib::types::std::string
+std::string
 lib::types::StringList::get(long unsigned int which) {
-    // TODO
+    if (which < this->size())
+        return this->strings->at(which):
+    else
+        throw new std::runtime_error("index out of bound");
 }
 
-void lib::types::StringList::set(lib::types::std::string old_
-                            lib::types::std::string new_) {
-    // TODO
+void lib::types::StringList::set(std::string old_, std::string new_) {
+    if (this->contains(new_))
+        throw new std::runtime_error("string already in list");
+    auto it = this->find(old_);
+    if (it != this->strings->end())
+        *it = new_;
+    else
+        throw new std::runtime_error("string not found");
 }
 
-void lib::types::StringList::add(lib::types::std::string string) {
-    // TODO
+void lib::types::StringList::add(std::string string) {
+    if (this->contains(string))
+        throw new std::runtime_error("string already in list");
+    else
+        this->strings->push_back(string);
 }
 
-void lib::types::StringList::del(lib::types::std::string string) {
-    // TODO
+void lib::types::StringList::del(std::string string) {
+    auto it = this->find(string);
+    if (it != this->strings->end())
+        this->strings->erase(it);
+    else
+        throw new std::runtime_error("string not found");
 }
 
-bool lib::types::StringList::contains(lib::types::std::string string) {
-    // TODO
+bool lib::types::StringList::contains(std::string string) {
+    return this->strings->end() != this->find(string);
 }
 
 std::string lib::types::StringList::toString() {
-    // TODO
+    std::string rep = "(types::string-list";
+    rep += ":strings '(" + boost::algorithm::join(*(this->strings), " ") + ")";
+    return rep + ")";
 }
 
-YAML::Node& operator>>(YAML::Node& node,
-                        lib::types::StringList& stringList)
+YAML::Node lib::types::StringList::dump() {
+    YAML::Node node;
+    for (auto it = this->strings->begin(); it != this->strings->end(); it++)
+        node.push_back(*it);
+    return node;
+}
 
-YAML::Node& operator<<(YAML::Node& node,
-                        lib::types::StringList& stringList) {
-    // TODO
+void lib::types::StringList::load(YAML::Node node) {
+    this->strings->clear();
+    for (YAML::const_iterator it = node.begin(); it != node.end(); it++)
+        this->strings.push_back(it->as<std::string>());
 }

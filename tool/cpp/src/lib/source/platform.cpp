@@ -18,48 +18,32 @@ long unsigned int lib::source::Platform::getNumberOfPackages() {
 }
 
 std::string lib::source::Platform::getPackage(long unsigned int which) {
-  if (which > this->getNumberOfPackages())
-    throw new std::runtime_error("index out of range");
-  return this->packages->at(which);
+  return this->packages->get(which);
 }
 
 void lib::source::Platform::addPackage(std::string package) {
-  if (this->containsPackage(package))
-    throw new std::runtime_error("such package already exists");
-  this->packages->push_back(package);
+  this->packages->add(package);
   this->dump();
 }
 
 void lib::source::Platform::deletePackage(std::string package) {
-  if (!(this->containsPackage(package)))
-    throw new std::runtime_error("such package doesn't exists");
-  this->packages->erase(this->findPackage(package));
+  this->packages->del(package);
   this->dump();
 }
 
 void lib::source::Platform::renamePackage(std::string package, std::string newname) {
-  if (this->containsPackage(newname))
-    throw new std::runtime_error("such package already exists");
-  if (!(this->containsPackage(package)))
-    throw new std::runtime_error("such package doesn't exists");
-  auto it = this->findPackage(package);
-  *it = newname;
+    this->packages->set(package, newname);
   this->dump();
 }
 
 bool lib::source::Platform::containsPackage(std::string package) {
-  auto it = this->findPackage(package);
-  return it != this->packages->end();
-}
-
-std::vector<std::string>::iterator lib::source::Platform::findPackage(std::string package) {
-  return std::find(this->packages->begin(), this->packages->end(), package);
+  return this->packages->contains(package);
 }
 
 std::string lib::source::Platform::toString() {
-  std::string string = "(source:platform :packages '(";
-  string += boost::algorithm::join(*(this->packages), " ");
-  return string + "))";
+  std::string string = "(source:platform";
+  string += " :packages " + this->packages->toString();
+  return string + ")";
 }
 
 void lib::source::Platform::load() {
@@ -67,21 +51,15 @@ void lib::source::Platform::load() {
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {
-    throw new std::runtime_error("");
+    throw new std::runtime_error("source platform index file doesn't exists");
   }
-  YAML::Node packages = document["packages"];
-  if (packages.Type() != YAML::NodeType::Sequence)
-    throw new std::runtime_error("wrong source index file format");
-
-  this->packages = new std::vector<std::string>();
-  for (YAML::const_iterator it = packages.begin(); it != packages.end(); it++)
-    this->packages->push_back(it->as<std::string>());
+  this->packages = new lib::types::StringList();
+  this->packages->load(document["packages"]);
 }
 
 void lib::source::Platform::dump() {
   YAML::Node document;
-  for (auto it = this->packages->begin(); it != this->packages->end(); it++)
-    document["packages"].push_back(*it);
+  document["packages"] = this->packages->dump();
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
 }

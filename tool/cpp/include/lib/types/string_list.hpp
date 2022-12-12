@@ -1,5 +1,5 @@
-#ifndef TOOL_LIB_TYPES_SEMVER_LIST
-#define TOOL_LIB_TYPES_SEMVER_LIST
+#ifndef TOOL_LIB_TYPES_STRING_LIST
+#define TOOL_LIB_TYPES_STRING_LIST
 
 #include<vector>
 #include<string>
@@ -9,7 +9,7 @@ namespace lib::types {
     class StringList {
         private:
             std::vector<std::string>* strings = NULL;
-            std::vector<std::string>::iterator findString(std::string string);
+            std::vector<std::string>::iterator find(std::string string);
         public:
             StringList();
             ~StringList();
@@ -21,11 +21,11 @@ namespace lib::types {
             void del(std::string string);
             bool contains(std::string string);
 
+            YAML::Node dump();
+            void load(YAML::Node node);
+            
             std::string toString();
     };
-
-    YAML::Node& operator>>(YAML::Node& node, StringList& stringList);
-    YAML::Node& operator<<YAML::Node& node, StringList& stringList);
 }
 
 #endif
