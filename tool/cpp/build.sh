@@ -1,17 +1,18 @@
 #!/bin/bash
 
-# wantNinja="yes"
-# wantClang="yes"
-buildJobs=1
 
 configure() {
+    buildJobs=1
+    if [ "$(nproc --ignore=1)" -gt "$buildJobs" ]; then
+        buildJobs="$(nproc --ignore=1)"
+    fi
     generator="make"
     cmake_flags="-Bbuild -DCMAKE_BUILD_TYPE=Release"
-    if [ "$wantNinja" == "yes" ]; then
+    if [ ! -z "$(which ninja)" ]; then
         cmake_flags="$cmake_flags -GNinja"
         generator="ninja"
     fi
-    if [ "$wantClang" == "yes" ]; then
+    if [ ! -z "$(which clang++)" ]; then
         cmake_flags="$cmake_flags -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang"
     fi
 
@@ -24,8 +25,7 @@ configure() {
 }
 
 build() {
-    cmake $cmake_flags && $generator -C build $ninja_flags && return 1
-    return 0
+    cmake $cmake_flags && $generator -C build $ninja_flags
 }
 
 package() {
