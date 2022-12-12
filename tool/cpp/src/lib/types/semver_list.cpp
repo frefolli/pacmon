@@ -1,4 +1,5 @@
 #include<lib/types/semver_list.hpp>
+#include<boost/algorithm/string/join.hpp>
 #include<stdexcept>
 
 lib::types::SemverList::SemverList() {
@@ -61,7 +62,7 @@ std::string lib::types::SemverList::toString() {
     std::vector<std::string> semverStrings;
     for (auto it = this->semvers->begin(); it != this->semvers->end(); it++)
         semverStrings.push_back(it->toString());
-    rep += ":semvers '(" + boost::algorithm::join(semverStrings, " ") + ")";
+    rep += " :semvers '(" + boost::algorithm::join(semverStrings, " ") + ")";
     return rep + ")";
 }
 

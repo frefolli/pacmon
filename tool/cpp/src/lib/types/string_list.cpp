@@ -1,5 +1,5 @@
 #include<lib/types/string_list.hpp>
-#include<boost/algorithm/string/jon>
+#include<boost/algorithm/string/join.hpp>
 #include<stdexcept>
 
 lib::types::StringList::StringList() {
@@ -11,11 +11,12 @@ lib::types::StringList::~StringList() {
 }
 
 std::vector<std::string>::iterator
-lib::types::StringList::findstd::string(std::string string) {
+lib::types::StringList::find(std::string string) {
     return std::find(this->strings->begin(),
                         this->strings->end(), string);
 }
 
+long unsigned int
 lib::types::StringList::size() {
     return this->strings->size();
 }
@@ -23,7 +24,7 @@ lib::types::StringList::size() {
 std::string
 lib::types::StringList::get(long unsigned int which) {
     if (which < this->size())
-        return this->strings->at(which):
+        return this->strings->at(which);
     else
         throw new std::runtime_error("index out of bound");
 }
@@ -59,7 +60,7 @@ bool lib::types::StringList::contains(std::string string) {
 
 std::string lib::types::StringList::toString() {
     std::string rep = "(types::string-list";
-    rep += ":strings '(" + boost::algorithm::join(*(this->strings), " ") + ")";
+    rep += " :strings '(" + boost::algorithm::join(*(this->strings), " ") + ")";
     return rep + ")";
 }
 
@@ -73,5 +74,5 @@ YAML::Node lib::types::StringList::dump() {
 void lib::types::StringList::load(YAML::Node node) {
     this->strings->clear();
     for (YAML::const_iterator it = node.begin(); it != node.end(); it++)
-        this->strings.push_back(it->as<std::string>());
+        this->strings->push_back(it->as<std::string>());
 }

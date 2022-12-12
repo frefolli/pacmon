@@ -1,6 +1,5 @@
 #include<lib/source/source.hpp>
 #include<yaml-cpp/yaml.h>
-#include<boost/algorithm/string/join.hpp>
 #include<fstream>
 #include<stdexcept>
 #include<algorithm>
