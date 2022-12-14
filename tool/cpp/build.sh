@@ -2,25 +2,25 @@
 
 configureArchitecture() {
     inputArch="$1"
-    buildForArchitecture="linux-64"
+    buildForArchitecture="amd64"
     if [ ! -z "$inputArch" ]; then
         buildForArchitecture=$inputArch
     fi
 }
 
 configureToolchain() {
-    if [ "$buildForArchitecture" == "linux-32" ]; then
+    if [ "$buildForArchitecture" == "i386" ]; then
         export CFLAGS="-m32 -O3"
         export CXXFLAGS="-m32 -O3"
         export LDFLAGS="-m32"
         export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-    elif [ "$buildForArchitecture" == "linux-64" ]; then
+    elif [ "$buildForArchitecture" == "amd64" ]; then
         export CFLAGS="-m64 -O3"
         export CXXFLAGS="-m64 -O3"
         export LDFLAGS="-m64"
         export PKG_CONFIG_PATH="/usr/lib64/pkgconfig"
     else
-        echo -e "select a valid architecture = { linux-32 | linux-64 }"
+        echo -e "select a valid architecture = { i386 | amd64 }"
         exit 1
     fi
 }
@@ -70,22 +70,8 @@ build() {
     cmake $cmake_flags && $generator -C build $generator_flags
 }
 
-package() {
-    mkdir -p dist/$buildForArchitecture
-    cd dist
-    mkdir -p $buildForArchitecture/usr/local/bin
-    cp build/src/main/main $buildForArchitecture/usr/local/bin
-    tar cf $buildForArchitecture.tar $buildForArchitecture
-    gzip $buildForArchitecture.tar
-}
-
-cleanup() {
-    rm -r ./build
-    # rm -r dist/$buildForArchitecture
-}
-
 main() {
-    configure $1 && build # && package && cleanup
+    configure $1 && build
 }
 
 main $1
