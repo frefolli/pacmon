@@ -1,0 +1,15 @@
+platform: arch
+package: bash-config
+version: 1.0.0
+license: GPL
+description:
+url:
+files:
+  install:
+  - .bashrc
+  support:
+  hashes:
+  - 5ca483f92d11707a841f966b602e13dcb4a794b70f84e8129099f1283b67381c
+softwares:
+install:
+uninstall:

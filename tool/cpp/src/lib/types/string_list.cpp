@@ -66,13 +66,13 @@ std::string lib::types::StringList::toString() {
 
 YAML::Node lib::types::StringList::dump() {
     YAML::Node node;
-    for (auto it = this->strings->begin(); it != this->strings->end(); it++)
+    for (auto it = this->strings->begin(); it != this->strings->end(); ++it)
         node.push_back(*it);
     return node;
 }
 
 void lib::types::StringList::load(YAML::Node node) {
     this->strings->clear();
-    for (YAML::const_iterator it = node.begin(); it != node.end(); it++)
+    for (YAML::const_iterator it = node.begin(); it != node.end(); ++it)
         this->strings->push_back(it->as<std::string>());
 }

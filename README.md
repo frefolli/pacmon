@@ -17,6 +17,7 @@
 | `<command>`     | string |      |
 | `<url>`         | string |      |
 | `<description>` | string |      |
+| `<hash>`        | sha256 |      |
 
 ### Source
 
@@ -84,6 +85,101 @@ files:
     - <file>
     - <file>
     - <file>
+softwares:
+- <software>
+- <software>
+- <software>
+install:
+- <command>
+- <command>
+- <command>
+uninstall:
+- <command>
+- <command>
+- <command>
+```
+
+### Repository
+
+#### Structure
+
+| folder                                   | notes |
+|------------------------------------------|-------|
+| `/`                                      |       |
+| `/<platform>/`                           |       |
+| `/<platform>/<package>/`                 |       |
+| `/<platform>/<package>/<version>/`       |       |
+| `/<platform>/<package>/<version>.tar.gz` |       |
+
+#### Config Files
+
+| index file                                  | notes |
+|---------------------------------------------|-------|
+| `/index.yml`                                |       |
+| `/<platform>/index.yml`                     |       |
+| `/<platform>/<package>/index.yml`           |       |
+| `/<platform>/<package>/<version>/index.yml` |       |
+
+##### `/index.yml`
+
+```yaml
+platforms:
+- <platform>
+- <platform>
+- <platform>
+```
+
+##### `/<platform>/index.yml`
+
+```yaml
+packages:
+- <package>
+- <package>
+- <package>
+```
+
+##### `/<platform>/<package>/index.yml`
+
+```yaml
+license: <license>
+description: <description>
+url: <url>
+depends:
+- <package>
+- <package>
+- <package>
+versions:
+- <version>
+- <version>
+- <version>
+```
+
+##### `/<platform>/<package>/<version>/index.yml`
+
+```yaml
+platform: <platform>
+package: <package>
+version: <version>
+license: <license>
+description: <description>
+url: <url>
+depends:
+- <package>
+- <package>
+- <package>
+files:
+    install:
+    - <file>
+    - <file>
+    - <file>
+    support:
+    - <file>
+    - <file>
+    - <file>
+    hashes:
+    - <hash>
+    - <hash>
+    - <hash>
 softwares:
 - <software>
 - <software>

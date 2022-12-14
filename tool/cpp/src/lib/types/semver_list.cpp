@@ -60,7 +60,7 @@ bool lib::types::SemverList::contains(lib::types::Semver semver) {
 std::string lib::types::SemverList::toString() {
     std::string rep = "(types:semver-list";
     std::vector<std::string> semverStrings;
-    for (auto it = this->semvers->begin(); it != this->semvers->end(); it++)
+    for (auto it = this->semvers->begin(); it != this->semvers->end(); ++it)
         semverStrings.push_back(it->toString());
     rep += " :semvers '(" + boost::algorithm::join(semverStrings, " ") + ")";
     return rep + ")";
@@ -75,6 +75,6 @@ YAML::Node lib::types::SemverList::dump() {
 
 void lib::types::SemverList::load(YAML::Node node) {
     this->semvers->clear();
-    for (YAML::const_iterator it = node.begin(); it != node.end(); it++)
+    for (YAML::const_iterator it = node.begin(); it != node.end(); ++it)
         this->semvers->push_back(lib::types::Semver(it->as<std::string>()));
 }

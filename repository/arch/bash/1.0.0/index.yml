@@ -1,0 +1,12 @@
+platform: arch
+package: bash
+version: 1.0.0
+license: GPL
+description:
+url:
+files:
+softwares:
+- bash
+- bash-completion
+install:
+uninstall:

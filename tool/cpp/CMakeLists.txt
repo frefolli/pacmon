@@ -1,20 +1,8 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.4)
 project(tool)
 
-if(CMAKE_VERSION VERSION_LESS 3.0.0)
-    include(CheckCXXCompilerFlag)
-    check_cxx_compiler_flag(-std=c++17 COMPILER_SUPPORTS_CXX17)
-    check_cxx_compiler_flag(-std=c++0x COMPILER_SUPPORTS_CXX0X)
-    if(COMPILER_SUPPORTS_CXX17)
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-    elseif(COMPILER_SUPPORTS_CXX0X)
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-    endif()
-else()
-    SET(CMAKE_CXX_STANDARD 17)
-    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-endif()
-
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(yaml-cpp REQUIRED)
 find_package(Boost REQUIRED)
