@@ -32,7 +32,6 @@ void someTree(std::string path) {
         for (int k = 0; k < package->getNumberOfVersions(); k++) {
           lib::types::Semver semver = package->getVersion(k);
           Version* version = new Version(path + "/" + platformName + "/" + packageName + "/" + semver.toString());
-          println("ok");
           println(version->toString());
           delete version;
         }

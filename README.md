@@ -209,52 +209,6 @@ uninstall:
 
 ##### actions
 
-###### root
-
-| command                                                               | description                                                                                  |
-|-----------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
-| `tool-src init`                                                       | create a new empty source folder, if path is not supplied it's created in the current folder |
-| `tool-src check`                                                      | run quick check on consistency on whole source folder                                        |
-| `tool-src list [platform]`                                            | list platforms in source folder, and eventually filter by name                               |
-| `tool-src add <platform>`                                             | add a new platform                                                                           |
-| `tool-src del <platform>`                                             | delete a platform                                                                            |
-| `tool-src rename <platform>`                                          | rename a platform                                                                            |
-| `tool-src dist <repository-uri> [<platform> [<package> [<version>]]]` | build, setup or update existing repository on the same machine                               |
-
-###### platform
-
-| command                                         | description                                                           |
-|-------------------------------------------------|-----------------------------------------------------------------------|
-| `tool-src <platform> check`                     | run quick check on consistency of a single platform                   |
-| `tool-src <platform> list [package]`            | list packages, and eventually filter by name                          |
-| `tool-src <platform> add <package> [<license>]` | add a new package, if license is not supplied it's defaulted with GPL |
-| `tool-src <platform> del <package>`             | delete a package                                                      |
-| `tool-src <platform> rename <package>`          | rename a package                                                      |
-
-###### package
-
-| command                                           | description                                        |
-|---------------------------------------------------|----------------------------------------------------|
-| `tool-src <platform> <package> check`             | run quick check on consistency of a single package |
-| `tool-src <platform> <package> license <license>` | change license of a package                        |
-| `tool-src <platform> <package> versions`          | list versions of a package                         |
-| `tool-src <platform> <package> add <version>`     | add a version of a package                         |
-| `tool-src <platform> <package> del <version>`     | delete a version of a package                      |
-| `tool-src <platform> <package> rename <version>`  | rename a version of a package                      |
-
-###### version
-
-| command                                         | description                                        |
-|-------------------------------------------------|----------------------------------------------------|
-| `tool-src <platform> <package> <version> check` | run quick check on consistency of a single version |
-|                                                 |                                                    |
-
-##### options
-
-| option | description                  |
-| ------ | ---------------------------- |
-| `-p`   | supply path of source folder |
-
 ### Repository
 
 #### `tool-repo`
