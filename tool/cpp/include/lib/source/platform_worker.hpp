@@ -6,33 +6,35 @@
 #include<lib/source/version_worker.hpp>
 
 namespace lib::source {
-    class PlatformWorker {
-        private:
-            std::string path;
-        public:
-            PlatformWorker(std::string path);
-            PlatformWorker();
-            ~PlatformWorker();
+  class PlatformWorker {
+  private:
+    std::string path;
+  public:
+    PlatformWorker(std::string path);
+    PlatformWorker();
+    ~PlatformWorker();
 
-            // actions
-            void doInit();
+    // actions
+    void doInit();
+    void checkCoherence();
+    void printAll();
             
-            void listPackages(std::string package);
+    void listPackages(std::string package);
             
-            void addPackage(std::string package);
+    void addPackage(std::string package);
             
-            void removePackage(std::string package);
+    void removePackage(std::string package);
             
-            void renamePackage(std::string package, std::string newname);
+    void renamePackage(std::string package, std::string newname);
 
-            void forkPackage(std::string package, std::string clonename);
+    void forkPackage(std::string package, std::string clonename);
 
-            // access
-            PackageWorker* getPackageWorker(std::string package);
+    // access
+    PackageWorker* getPackageWorker(std::string package);
 
-            VersionWorker* getVersionWorker(std::string package,
-                                            std::string version);
-    };
+    VersionWorker* getVersionWorker(std::string package,
+				    std::string version);
+  };
 }
 
 #endif

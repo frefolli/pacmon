@@ -17,26 +17,26 @@ long unsigned int lib::repository::Repository::getNumberOfPlatforms() {
 }
 
 std::string lib::repository::Repository::getPlatform(long unsigned int which) {
-    return this->platforms->get(which);
+  return this->platforms->get(which);
 }
 
 void lib::repository::Repository::addPlatform(std::string platform) {
-    this->platforms->add(platform);
+  this->platforms->add(platform);
   this->dump();
 }
 
 void lib::repository::Repository::deletePlatform(std::string platform) {
-    this->platforms->del(platform);
+  this->platforms->del(platform);
   this->dump();
 }
 
 void lib::repository::Repository::renamePlatform(std::string platform, std::string newname) {
-    this->platforms->set(platform, newname);
+  this->platforms->set(platform, newname);
   this->dump();
 }
 
 bool lib::repository::Repository::containsPlatform(std::string platform) {
-    return this->platforms->contains(platform);
+  return this->platforms->contains(platform);
 }
 
 std::string lib::repository::Repository::toString() {

@@ -9,7 +9,7 @@
 namespace lib::source {
   class Source : public lib::types::IndexFile {
   private:
-      lib::types::StringList* platforms = NULL;
+    lib::types::StringList* platforms = NULL;
 
     void load();
     void dump();
@@ -26,6 +26,8 @@ namespace lib::source {
     bool containsPlatform(std::string platform);
 
     std::string toString();
+
+    void commit();
   };
 }
 

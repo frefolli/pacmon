@@ -58,6 +58,7 @@ namespace lib::source {
     void deleteUninstallCommand(std::string command);
 
     std::string toString();
+    void commit();
   };
 }
 

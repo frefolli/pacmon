@@ -46,6 +46,7 @@ namespace lib::source {
     std::string getLicense();
 
     std::string toString();
+    void commit();
   };
 }
 

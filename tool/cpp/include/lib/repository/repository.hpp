@@ -9,7 +9,7 @@
 namespace lib::repository {
   class Repository : public lib::types::IndexFile {
   private:
-      lib::types::StringList* platforms = NULL;
+    lib::types::StringList* platforms = NULL;
 
     void load();
     void dump();

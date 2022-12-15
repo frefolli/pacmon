@@ -4,130 +4,130 @@
 #include<fstream>
 
 lib::source::Version::Version(std::string path) : IndexFile(path) {
-    this->load();
+  this->load();
 }
 
 lib::source::Version::~Version() {
-    delete this->filesToInstall;
-    delete this->filesAsSupport;
-    delete this->softwares;
-    delete this->installCommands;
-    delete this->uninstallCommands;
+  delete this->filesToInstall;
+  delete this->filesAsSupport;
+  delete this->softwares;
+  delete this->installCommands;
+  delete this->uninstallCommands;
 }
 
 long unsigned int lib::source::Version::getNumberOfFilesToInstall() {
-    return this->filesToInstall->size();
+  return this->filesToInstall->size();
 }
 
 long unsigned int lib::source::Version::getNumberOfFilesAsSupport() {
-    return this->filesAsSupport->size();
+  return this->filesAsSupport->size();
 }
 
 long unsigned int lib::source::Version::getNumberOfSoftwares() {
-    return this->softwares->size();
+  return this->softwares->size();
 }
 
 long unsigned int lib::source::Version::getNumberOfInstallCommands() {
-    return this->installCommands->size();
+  return this->installCommands->size();
 }
 
 long unsigned int lib::source::Version::getNumberOfUninstallCommands() {
-    return this->uninstallCommands->size();
+  return this->uninstallCommands->size();
 }
 
 std::string lib::source::Version::getFileToInstall(long unsigned int which) {
-    return this->filesToInstall->get(which);
+  return this->filesToInstall->get(which);
 }
 
 std::string lib::source::Version::getFileAsSupport(long unsigned int which) {
-    return this->filesAsSupport->get(which);
+  return this->filesAsSupport->get(which);
 }
 
 std::string lib::source::Version::getSoftware(long unsigned int which) {
-    return this->softwares->get(which);
+  return this->softwares->get(which);
 }
 
 std::string lib::source::Version::getInstallCommand(long unsigned int which) {
-    return this->installCommands->get(which);
+  return this->installCommands->get(which);
 }
 
 std::string lib::source::Version::getUninstallCommand(long unsigned int which) {
-    return this->uninstallCommands->get(which);
+  return this->uninstallCommands->get(which);
 }
 
 void lib::source::Version::addFileToInstall(std::string file) {
-    this->filesToInstall->add(file);
+  this->filesToInstall->add(file);
 }
 
 void lib::source::Version::addFileAsSupport(std::string file) {
-    this->filesAsSupport->add(file);
+  this->filesAsSupport->add(file);
 }
 
 void lib::source::Version::addSoftware(std::string software) {
-    this->softwares->add(software);
+  this->softwares->add(software);
 }
 
 void lib::source::Version::addInstallCommand(std::string command) {
-    this->installCommands->add(command);
+  this->installCommands->add(command);
 }
 
 void lib::source::Version::addUninstallCommand(std::string command) {
-    this->uninstallCommands->add(command);
+  this->uninstallCommands->add(command);
 }
 
 void lib::source::Version::renameFileToInstall(std::string file,
-                         std::string newname) {
-    this->filesToInstall->set(file, newname);
+                                               std::string newname) {
+  this->filesToInstall->set(file, newname);
 }
 
 void lib::source::Version::renameFileAsSupport(std::string file,
-                         std::string newname) {
-    this->filesAsSupport->set(file, newname);
+                                               std::string newname) {
+  this->filesAsSupport->set(file, newname);
 }
 
 void lib::source::Version::renameSoftware(std::string software,
-                    std::string newname) {
-    this->softwares->set(software, newname);
+                                          std::string newname) {
+  this->softwares->set(software, newname);
 }
 
 void lib::source::Version::renameInstallCommand(std::string command,
-                          std::string newname) {
-    this->installCommands->set(command, newname);
+                                                std::string newname) {
+  this->installCommands->set(command, newname);
 }
 
 void lib::source::Version::renameUninstallCommand(std::string command,
-                            std::string newname) {
-    this->uninstallCommands->set(command, newname);
+                                                  std::string newname) {
+  this->uninstallCommands->set(command, newname);
 }
 
 void lib::source::Version::deleteFileToInstall(std::string file) {
-    this->filesToInstall->del(file);
+  this->filesToInstall->del(file);
 }
 
 void lib::source::Version::deleteFileAsSupport(std::string file) {
-    this->filesAsSupport->del(file);
+  this->filesAsSupport->del(file);
 }
 
 void lib::source::Version::deleteSoftware(std::string software) {
-    this->softwares->del(software);
+  this->softwares->del(software);
 }
 
 void lib::source::Version::deleteInstallCommand(std::string command) {
-    this->installCommands->del(command);
+  this->installCommands->del(command);
 }
 
 void lib::source::Version::deleteUninstallCommand(std::string command) {
-    this->uninstallCommands->del(command);
+  this->uninstallCommands->del(command);
 }
 
 std::string lib::source::Version::toString() {
-    std::string string = "(source:version";
-    string += " :files-to-install " + this->filesToInstall->toString();
-    string += " :files-as-support " + this->filesAsSupport->toString();
-    string += " :softwares " + this->softwares->toString();
-    string += " :install-commands " + this->installCommands->toString();
-    string += " :uninstall-commands " + this->uninstallCommands->toString();
-    return string + ")";
+  std::string string = "(source:version";
+  string += " :files-to-install " + this->filesToInstall->toString();
+  string += " :files-as-support " + this->filesAsSupport->toString();
+  string += " :softwares " + this->softwares->toString();
+  string += " :install-commands " + this->installCommands->toString();
+  string += " :uninstall-commands " + this->uninstallCommands->toString();
+  return string + ")";
 }
 
 void lib::source::Version::load() {
@@ -151,11 +151,11 @@ void lib::source::Version::load() {
       this->filesAsSupport->load(document["files"]["support"]);
   }
   if (document["softwares"])
-      this->softwares->load(document["softwares"]);
+    this->softwares->load(document["softwares"]);
   if (document["install"])
-      this->installCommands->load(document["install"]);
+    this->installCommands->load(document["install"]);
   if (document["uninstall"])
-      this->installCommands->load(document["uninstall"]);
+    this->installCommands->load(document["uninstall"]);
 }
 
 void lib::source::Version::dump() {
@@ -167,4 +167,8 @@ void lib::source::Version::dump() {
   document["uninstall"] = this->uninstallCommands->dump();
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
+}
+
+void lib::source::Version::commit() {
+  this->dump();
 }

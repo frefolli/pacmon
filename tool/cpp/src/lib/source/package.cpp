@@ -24,44 +24,38 @@ lib::types::Semver lib::source::Package::getVersion(long unsigned int which) {
 
 void lib::source::Package::addVersion(lib::types::Semver version) {
   this->versions->add(version);
-  this->dump();
 }
 
 void lib::source::Package::deleteVersion(lib::types::Semver version) {
   this->versions->del(version);
-  this->dump();
 }
 
 void lib::source::Package::renameVersion(lib::types::Semver version, lib::types::Semver newname) {
-    this->versions->set(version, newname);
-  this->dump();
+  this->versions->set(version, newname);
 }
 
 bool lib::source::Package::containsVersion(lib::types::Semver version) {
-    return this->versions->contains(version);
+  return this->versions->contains(version);
 }
 
 long unsigned int lib::source::Package::getNumberOfDependencies() {
-    return this->depends->size();
+  return this->depends->size();
 }
 
 std::string lib::source::Package::getDependency(long unsigned int which) {
-      return this->depends->get(which);    
+  return this->depends->get(which);    
 }
 
 void lib::source::Package::addDependency(std::string dependency) {
-    this->depends->add(dependency);
-  this->dump();
+  this->depends->add(dependency);
 }
 
 void lib::source::Package::deleteDependency(std::string dependency) {
   this->depends->del(dependency);
-  this->dump();
 }
 
 void lib::source::Package::renameDependency(std::string dependency, std::string newname) {
   this->depends->set(dependency, newname);
-  this->dump();
 }
 
 bool lib::source::Package::containsDependency(std::string dependency) {
@@ -69,27 +63,27 @@ bool lib::source::Package::containsDependency(std::string dependency) {
 }
 
 void lib::source::Package::setUrl(std::string url) {
-    this->url = url;
+  this->url = url;
 }
 
 void lib::source::Package::setDescription(std::string description) {
-    this->description = description;
+  this->description = description;
 }
 
 void lib::source::Package::setLicense(std::string license) {
-    this->license = license;
+  this->license = license;
 }
 
 std::string lib::source::Package::getUrl() {
-    return this->url;
+  return this->url;
 }
 
 std::string lib::source::Package::getDescription() {
-    return this->description;
+  return this->description;
 }
 
 std::string lib::source::Package::getLicense() {
-    return this->license;
+  return this->license;
 }
 
 std::string lib::source::Package::toString() {
@@ -132,4 +126,8 @@ void lib::source::Package::dump() {
   
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
+}
+
+void lib::source::Package::commit() {
+  this->dump();
 }

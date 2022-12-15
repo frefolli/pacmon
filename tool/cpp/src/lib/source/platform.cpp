@@ -23,17 +23,14 @@ std::string lib::source::Platform::getPackage(long unsigned int which) {
 
 void lib::source::Platform::addPackage(std::string package) {
   this->packages->add(package);
-  this->dump();
 }
 
 void lib::source::Platform::deletePackage(std::string package) {
   this->packages->del(package);
-  this->dump();
 }
 
 void lib::source::Platform::renamePackage(std::string package, std::string newname) {
-    this->packages->set(package, newname);
-  this->dump();
+  this->packages->set(package, newname);
 }
 
 bool lib::source::Platform::containsPackage(std::string package) {
@@ -47,7 +44,7 @@ std::string lib::source::Platform::toString() {
 }
 
 void lib::source::Platform::load() {
-    YAML::Node document;
+  YAML::Node document;
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {
@@ -62,4 +59,8 @@ void lib::source::Platform::dump() {
   document["packages"] = this->packages->dump();
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
+}
+
+void lib::source::Platform::commit() {
+  this->dump();
 }

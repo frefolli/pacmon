@@ -1,50 +1,58 @@
 #include <lib/source/platform_worker.hpp>
 
 lib::source::PlatformWorker::PlatformWorker(std::string path) {
-    // TODO
+  // TODO
 }
 
 lib::source::PlatformWorker::PlatformWorker() {
-    // TODO
+  // TODO
 }
 
 lib::source::PlatformWorker::~PlatformWorker() {
-    // TODO
+  // TODO
 }
 
 // actions
 void lib::source::PlatformWorker::doInit() {
-    // TODO
+  // TODO
+}
+
+void lib::source::PlatformWorker::checkCoherence() {
+  // TODO
+}
+
+void lib::source::PlatformWorker::printAll() {
+  // TODO
 }
 
 void lib::source::PlatformWorker::listPackages(std::string package) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PlatformWorker::addPackage(std::string package) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PlatformWorker::removePackage(std::string package) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PlatformWorker::renamePackage(std::string package, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PlatformWorker::forkPackage(std::string package, std::string clonename) {
-    // TODO
+  // TODO
 }
 
 // access
 lib::source::PackageWorker*
 lib::source::PlatformWorker::getPackageWorker(std::string package) {
-    // TODO
+  // TODO
 }
 
 lib::source::VersionWorker*
 lib::source::PlatformWorker::getVersionWorker(std::string package,
-                                                std::string version) {
-    // TODO
+                                              std::string version) {
+  // TODO
 }

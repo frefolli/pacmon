@@ -1,57 +1,65 @@
 #include <lib/source/source_worker.hpp>
 
 lib::source::SourceWorker::SourceWorker(std::string path) {
-    // TODO
+  // TODO
 }
 
 lib::source::SourceWorker::SourceWorker() {
-    // TODO
+  // TODO
 }
 
 lib::source::SourceWorker::~SourceWorker() {
-    // TODO
+  // TODO
 }
 
 // actions
 void lib::source::SourceWorker::doInit() {
-    // TODO
+  // TODO
+}
+
+void lib::source::SourceWorker::checkCoherence() {
+  // TODO
+}
+
+void lib::source::SourceWorker::printAll() {
+  // TODO
 }
 
 void lib::source::SourceWorker::listPlatforms(std::string platform) {
-    // TODO
+  // TODO
 }
 
 void lib::source::SourceWorker::addPlatform(std::string platform) {
-    // TODO
+  // TODO
 }
 
 void lib::source::SourceWorker::removePlatform(std::string platform) {
-    // TODO
+  // TODO
 }
 
 void lib::source::SourceWorker::renamePlatform(std::string platform, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::SourceWorker::forkPlatform(std::string platform, std::string clonename) {
-    // TODO
+  // TODO
 }
 
 // access
 lib::source::PlatformWorker*
 lib::source::SourceWorker::getPlatformWorker(std::string platform) {
-    // TODO
+  // TODO
 }
 
 lib::source::PackageWorker*
 lib::source::SourceWorker::getPackageWorker(std::string platform,
                                             std::string package) {
-    // TODO
+  // TODO
 }
 
 lib::source::VersionWorker*
 lib::source::SourceWorker::getVersionWorker(std::string platform,
                                             std::string package,
                                             std::string version) {
-    // TODO
+  // TODO
 }

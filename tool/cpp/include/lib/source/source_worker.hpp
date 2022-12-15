@@ -7,37 +7,39 @@
 #include<lib/source/version_worker.hpp>
 
 namespace lib::source {
-    class SourceWorker {
-        private:
-            std::string path;
-        public:
-            SourceWorker(std::string path);
-            SourceWorker();
-            ~SourceWorker();
+  class SourceWorker {
+  private:
+    std::string path;
+  public:
+    SourceWorker(std::string path);
+    SourceWorker();
+    ~SourceWorker();
 
-            // actions
-            void doInit();
+    // actions
+    void doInit();
+    void checkCoherence();
+    void printAll();
             
-            void listPlatforms(std::string platform);
+    void listPlatforms(std::string platform);
             
-            void addPlatform(std::string platform);
+    void addPlatform(std::string platform);
             
-            void removePlatform(std::string platform);
+    void removePlatform(std::string platform);
             
-            void renamePlatform(std::string platform, std::string newname);
+    void renamePlatform(std::string platform, std::string newname);
             
-            void forkPlatform(std::string platform, std::string clonename);
+    void forkPlatform(std::string platform, std::string clonename);
 
-            // access
-            PlatformWorker* getPlatformWorker(std::string platform);
+    // access
+    PlatformWorker* getPlatformWorker(std::string platform);
             
-            PackageWorker* getPackageWorker(std::string platform,
-                                            std::string package);
+    PackageWorker* getPackageWorker(std::string platform,
+				    std::string package);
 
-            VersionWorker* getVersionWorker(std::string platform,
-                                            std::string package,
-                                            std::string version);
-    };
+    VersionWorker* getVersionWorker(std::string platform,
+				    std::string package,
+				    std::string version);
+  };
 }
 
 #endif

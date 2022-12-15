@@ -4,14 +4,14 @@
 #include<string>
 
 namespace lib::types {
-    class IndexFile {
-        std::string path;
-        public:
-            IndexFile(std::string path);
+  class IndexFile {
+    std::string path;
+  public:
+    IndexFile(std::string path);
             
-            std::string getPath();
-            std::string getIndexPath();
-    };
+    std::string getPath();
+    std::string getIndexPath();
+  };
 }
 
 #endif

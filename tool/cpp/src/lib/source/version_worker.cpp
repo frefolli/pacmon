@@ -1,102 +1,110 @@
 #include<lib/source/version_worker.hpp>
 
 lib::source::VersionWorker::VersionWorker(std::string path) {
-    // TODO
+  // TODO
 }
 
 lib::source::VersionWorker::VersionWorker() {
-    // TODO
+  // TODO
 }
 
 lib::source::VersionWorker::~VersionWorker() {
-    // TODO
+  // TODO
 }
 
 // init
 void lib::source::VersionWorker::doInit() {
-    // TODO
+  // TODO
+}
+
+void lib::source::VersionWorker::checkCoherence() {
+  // TODO
+}
+
+void lib::source::VersionWorker::printAll() {
+  // TODO
 }
 
 void lib::source::VersionWorker::listFilesAsSupport() {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::listFilesToInstall() {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::listAllFiles() {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::listSoftwares() {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::listInstallCommands() {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::listUninstallCommands() {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::addFileAsSupport(std::string file) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::addFileToInstall(std::string file) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::addSoftware(std::string software) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::addInstallCommand(std::string command) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::addUninstallCommand(std::string command) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::removeFileAsSupport(std::string file) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::removeFileToInstall(std::string file) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::removeSoftware(std::string software) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::removeInstallCommand(std::string command) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::removeUninstallCommand(std::string command) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::renameFileAsSupport(std::string file, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::renameFileToInstall(std::string file, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::renameSoftware(std::string software, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::renameInstallCommand(std::string command, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::VersionWorker::renameUninstallCommand(std::string command, std::string newname) {
-    // TODO
+  // TODO
 }

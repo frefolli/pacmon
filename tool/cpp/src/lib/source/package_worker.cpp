@@ -1,84 +1,92 @@
 #include <lib/source/package_worker.hpp>
 
 lib::source::PackageWorker::PackageWorker(std::string path) {
-    // TODO
+  // TODO
 }
 
 lib::source::PackageWorker::PackageWorker() {
-    // TODO
+  // TODO
 }
 
 lib::source::PackageWorker::~PackageWorker() {
-    // TODO
+  // TODO
 }
 
 // actions
 void lib::source::PackageWorker::doInit() {
-    // TODO
+  // TODO
+}
+
+void lib::source::PackageWorker::checkCoherence() {
+  // TODO
+}
+
+void lib::source::PackageWorker::printAll() {
+  // TODO
 }
 
 void lib::source::PackageWorker::listVersions(std::string version) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::listDependencies(std::string dependency) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::printLicense() {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::printUrl() {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::printDescription() {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::setLicense(std::string license) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::setUrl(std::string url) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::setDescription(std::string description) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::addVersion(std::string version) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::addDependency(std::string dependency) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::removeVersion(std::string version) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::removeDependency(std::string dependency) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::renameVersion(std::string version, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::renameDependency(std::string dependency, std::string newname) {
-    // TODO
+  // TODO
 }
 
 void lib::source::PackageWorker::forkVersion(std::string version, std::string clonename) {
-    // TODO
+  // TODO
 }
 
 // access
 lib::source::VersionWorker*
 lib::source::PackageWorker::getVersionWorker(std::string version) {
-    // TODO
+  // TODO
 }

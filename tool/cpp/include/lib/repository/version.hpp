@@ -74,7 +74,7 @@ namespace lib::repository {
     void renameUninstallCommand(std::string command,
                                 std::string newname);
     void renameDependency(std::string dependency,
-                            std::string newname);
+			  std::string newname);
 
     void deleteFileToInstall(std::string file);
     void deleteFileAsSupport(std::string file);

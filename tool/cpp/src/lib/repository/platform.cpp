@@ -32,7 +32,7 @@ void lib::repository::Platform::deletePackage(std::string package) {
 }
 
 void lib::repository::Platform::renamePackage(std::string package, std::string newname) {
-    this->packages->set(package, newname);
+  this->packages->set(package, newname);
   this->dump();
 }
 
@@ -47,7 +47,7 @@ std::string lib::repository::Platform::toString() {
 }
 
 void lib::repository::Platform::load() {
-    YAML::Node document;
+  YAML::Node document;
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {

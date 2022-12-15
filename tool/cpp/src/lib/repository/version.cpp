@@ -4,210 +4,210 @@
 #include<fstream>
 
 lib::repository::Version::Version(std::string path) : IndexFile(path) {
-    this->load();
+  this->load();
 }
 
 lib::repository::Version::~Version() {
-    delete this->filesToInstall;
-    delete this->filesAsSupport;
-    delete this->softwares;
-    delete this->installCommands;
-    delete this->uninstallCommands;
+  delete this->filesToInstall;
+  delete this->filesAsSupport;
+  delete this->softwares;
+  delete this->installCommands;
+  delete this->uninstallCommands;
 }
 
 std::string lib::repository::Version::getPlatform() {
-    return this->platform;
+  return this->platform;
 }
 
 std::string lib::repository::Version::getPackage() {
-    return this->package;
+  return this->package;
 }
 
 std::string lib::repository::Version::getLicense() {
-    return this->license;
+  return this->license;
 }
 
 std::string lib::repository::Version::getDescription() {
-    return this->description;
+  return this->description;
 }
 
 std::string lib::repository::Version::getUrl() {
-    return this->url;
+  return this->url;
 }
 
 lib::types::Semver lib::repository::Version::getVersion() {
-    return this->version->toString();
+  return this->version->toString();
 }
 
 void lib::repository::Version::setPlatform(std::string platform) {
-    this->platform = platform;
+  this->platform = platform;
 }
 
 void lib::repository::Version::setPackage(std::string package) {
-    this->package = package;
+  this->package = package;
 }
 
 void lib::repository::Version::setLicense(std::string license) {
-    this->license = license;
+  this->license = license;
 }
 
 void lib::repository::Version::setUrl(std::string url) {
-    this->url = url;
+  this->url = url;
 }
 
 void lib::repository::Version::setDescription(std::string description) {
-    this->description = description;
+  this->description = description;
 }
 
 void lib::repository::Version::setVersion(lib::types::Semver version) {
-    this->version->setAll(version.toString());
+  this->version->setAll(version.toString());
 }
 
 long unsigned int lib::repository::Version::getNumberOfFilesToInstall() {
-    return this->filesToInstall->size();
+  return this->filesToInstall->size();
 }
 
 long unsigned int lib::repository::Version::getNumberOfFilesAsSupport() {
-    return this->filesAsSupport->size();
+  return this->filesAsSupport->size();
 }
 
 long unsigned int lib::repository::Version::getNumberOfSoftwares() {
-    return this->softwares->size();
+  return this->softwares->size();
 }
 
 long unsigned int lib::repository::Version::getNumberOfInstallCommands() {
-    return this->installCommands->size();
+  return this->installCommands->size();
 }
 
 long unsigned int lib::repository::Version::getNumberOfUninstallCommands() {
-    return this->uninstallCommands->size();
+  return this->uninstallCommands->size();
 }
 
 long unsigned int lib::repository::Version::getNumberOfDependencies() {
-    return this->depends->size();
+  return this->depends->size();
 }
 
 std::string lib::repository::Version::getFileToInstall(long unsigned int which) {
-    return this->filesToInstall->get(which);
+  return this->filesToInstall->get(which);
 }
 
 std::string lib::repository::Version::getFileAsSupport(long unsigned int which) {
-    return this->filesAsSupport->get(which);
+  return this->filesAsSupport->get(which);
 }
 
 std::string lib::repository::Version::getFileHash(long unsigned int which) {
-    return this->fileHashes->get(which);
+  return this->fileHashes->get(which);
 }
 
 std::string lib::repository::Version::getSoftware(long unsigned int which) {
-    return this->softwares->get(which);
+  return this->softwares->get(which);
 }
 
 std::string lib::repository::Version::getInstallCommand(long unsigned int which) {
-    return this->installCommands->get(which);
+  return this->installCommands->get(which);
 }
 
 std::string lib::repository::Version::getUninstallCommand(long unsigned int which) {
-    return this->uninstallCommands->get(which);
+  return this->uninstallCommands->get(which);
 }
 
 std::string lib::repository::Version::getDependency(long unsigned int which) {
-    return this->depends->get(which);
+  return this->depends->get(which);
 }
 
 void lib::repository::Version::addFileToInstall(std::string file) {
-    this->filesToInstall->add(file);
+  this->filesToInstall->add(file);
 }
 
 void lib::repository::Version::addFileAsSupport(std::string file) {
-    this->filesAsSupport->add(file);
+  this->filesAsSupport->add(file);
 }
 
 void lib::repository::Version::addSoftware(std::string software) {
-    this->softwares->add(software);
+  this->softwares->add(software);
 }
 
 void lib::repository::Version::addInstallCommand(std::string command) {
-    this->installCommands->add(command);
+  this->installCommands->add(command);
 }
 
 void lib::repository::Version::addUninstallCommand(std::string command) {
-    this->uninstallCommands->add(command);
+  this->uninstallCommands->add(command);
 }
 
 void lib::repository::Version::addDependency(std::string dependency) {
-    this->depends->add(dependency);
+  this->depends->add(dependency);
 }
 
 void lib::repository::Version::renameFileToInstall(std::string file,
-                         std::string newname) {
-    this->filesToInstall->set(file, newname);
+						   std::string newname) {
+  this->filesToInstall->set(file, newname);
 }
 
 void lib::repository::Version::renameFileAsSupport(std::string file,
-                         std::string newname) {
-    this->filesAsSupport->set(file, newname);
+						   std::string newname) {
+  this->filesAsSupport->set(file, newname);
 }
 
 void lib::repository::Version::renameSoftware(std::string software,
-                    std::string newname) {
-    this->softwares->set(software, newname);
+					      std::string newname) {
+  this->softwares->set(software, newname);
 }
 
 void lib::repository::Version::renameInstallCommand(std::string command,
-                          std::string newname) {
-    this->installCommands->set(command, newname);
+						    std::string newname) {
+  this->installCommands->set(command, newname);
 }
 
 void lib::repository::Version::renameUninstallCommand(std::string command,
-                            std::string newname) {
-    this->uninstallCommands->set(command, newname);
+						      std::string newname) {
+  this->uninstallCommands->set(command, newname);
 }
 
 void lib::repository::Version::renameDependency(std::string dependency, std::string newname) {
-    this->depends->set(dependency, newname);
+  this->depends->set(dependency, newname);
 }
 
 void lib::repository::Version::deleteFileToInstall(std::string file) {
-    this->filesToInstall->del(file);
+  this->filesToInstall->del(file);
 }
 
 void lib::repository::Version::deleteFileAsSupport(std::string file) {
-    this->filesAsSupport->del(file);
+  this->filesAsSupport->del(file);
 }
 
 void lib::repository::Version::deleteSoftware(std::string software) {
-    this->softwares->del(software);
+  this->softwares->del(software);
 }
 
 void lib::repository::Version::deleteInstallCommand(std::string command) {
-    this->installCommands->del(command);
+  this->installCommands->del(command);
 }
 
 void lib::repository::Version::deleteUninstallCommand(std::string command) {
-    this->uninstallCommands->del(command);
+  this->uninstallCommands->del(command);
 }
 
 void lib::repository::Version::deleteDependency(std::string dependency) {
-    this->depends->del(dependency);
+  this->depends->del(dependency);
 }
 
 std::string lib::repository::Version::toString() {
-    std::string string = "(repository:version";
-    string += " :platform " + this->platform;
-    string += " :package " + this->package;
-    string += " :version " + this->version->toString();
-    string += " :license " + this->license;
-    string += " :description " + this->description;
-    string += " :url " + this->url;
-    string += " :files-to-install " + this->filesToInstall->toString();
-    string += " :files-as-support " + this->filesAsSupport->toString();
-    string += " :file-hashes " + this->fileHashes->toString();
-    string += " :softwares " + this->softwares->toString();
-    string += " :install-commands " + this->installCommands->toString();
-    string += " :uninstall-commands " + this->uninstallCommands->toString();
-    string += " :files-as-support " + this->filesAsSupport->toString();
-    return string + ")";
+  std::string string = "(repository:version";
+  string += " :platform " + this->platform;
+  string += " :package " + this->package;
+  string += " :version " + this->version->toString();
+  string += " :license " + this->license;
+  string += " :description " + this->description;
+  string += " :url " + this->url;
+  string += " :files-to-install " + this->filesToInstall->toString();
+  string += " :files-as-support " + this->filesAsSupport->toString();
+  string += " :file-hashes " + this->fileHashes->toString();
+  string += " :softwares " + this->softwares->toString();
+  string += " :install-commands " + this->installCommands->toString();
+  string += " :uninstall-commands " + this->uninstallCommands->toString();
+  string += " :files-as-support " + this->filesAsSupport->toString();
+  return string + ")";
 }
 
 void lib::repository::Version::load() {

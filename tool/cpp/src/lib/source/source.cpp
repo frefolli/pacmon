@@ -17,26 +17,23 @@ long unsigned int lib::source::Source::getNumberOfPlatforms() {
 }
 
 std::string lib::source::Source::getPlatform(long unsigned int which) {
-    return this->platforms->get(which);
+  return this->platforms->get(which);
 }
 
 void lib::source::Source::addPlatform(std::string platform) {
-    this->platforms->add(platform);
-  this->dump();
+  this->platforms->add(platform);
 }
 
 void lib::source::Source::deletePlatform(std::string platform) {
-    this->platforms->del(platform);
-  this->dump();
+  this->platforms->del(platform);
 }
 
 void lib::source::Source::renamePlatform(std::string platform, std::string newname) {
-    this->platforms->set(platform, newname);
-  this->dump();
+  this->platforms->set(platform, newname);
 }
 
 bool lib::source::Source::containsPlatform(std::string platform) {
-    return this->platforms->contains(platform);
+  return this->platforms->contains(platform);
 }
 
 std::string lib::source::Source::toString() {
@@ -64,4 +61,8 @@ void lib::source::Source::dump() {
   document["platforms"] = this->platforms->dump();
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
+}
+
+void lib::source::Source::commit() {
+  this->dump();
 }

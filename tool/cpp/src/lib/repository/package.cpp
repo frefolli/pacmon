@@ -33,24 +33,24 @@ void lib::repository::Package::deleteVersion(lib::types::Semver version) {
 }
 
 void lib::repository::Package::renameVersion(lib::types::Semver version, lib::types::Semver newname) {
-    this->versions->set(version, newname);
+  this->versions->set(version, newname);
   this->dump();
 }
 
 bool lib::repository::Package::containsVersion(lib::types::Semver version) {
-    return this->versions->contains(version);
+  return this->versions->contains(version);
 }
 
 long unsigned int lib::repository::Package::getNumberOfDependencies() {
-    return this->depends->size();
+  return this->depends->size();
 }
 
 std::string lib::repository::Package::getDependency(long unsigned int which) {
-      return this->depends->get(which);    
+  return this->depends->get(which);    
 }
 
 void lib::repository::Package::addDependency(std::string dependency) {
-    this->depends->add(dependency);
+  this->depends->add(dependency);
   this->dump();
 }
 
@@ -69,27 +69,27 @@ bool lib::repository::Package::containsDependency(std::string dependency) {
 }
 
 void lib::repository::Package::setUrl(std::string url) {
-    this->url = url;
+  this->url = url;
 }
 
 void lib::repository::Package::setDescription(std::string description) {
-    this->description = description;
+  this->description = description;
 }
 
 void lib::repository::Package::setLicense(std::string license) {
-    this->license = license;
+  this->license = license;
 }
 
 std::string lib::repository::Package::getUrl() {
-    return this->url;
+  return this->url;
 }
 
 std::string lib::repository::Package::getDescription() {
-    return this->description;
+  return this->description;
 }
 
 std::string lib::repository::Package::getLicense() {
-    return this->license;
+  return this->license;
 }
 
 std::string lib::repository::Package::toString() {
