@@ -1,26 +1,33 @@
 #!/bin/bash
+WANT_CLANG=no
+WANT_NINJA=no
+WANT_OPT=3
 
 configureArchitecture() {
     inputArch="$1"
-    buildForArchitecture="amd64"
+    buildForArchitecture="native"
     if [ ! -z "$inputArch" ]; then
         buildForArchitecture=$inputArch
     fi
 }
 
 configureToolchain() {
+    if [ ! -z "$WANT_OPT" ]; then
+        export CFLAGS="$CFLAGS -O$WANT_OPT"
+        export CXXFLAGS="$CXXFLAGS -O$WANT_OPT"
+    fi
     if [ "$buildForArchitecture" == "i386" ]; then
-        export CFLAGS="-m32 -O3"
-        export CXXFLAGS="-m32 -O3"
-        export LDFLAGS="-m32"
-        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        export CFLAGS="$CFLAGS -m32"
+        export CXXFLAGS="$CXXFLAGS -m32"
+        export LDFLAGS="$LDFLAGS -m32"
+        # export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
     elif [ "$buildForArchitecture" == "amd64" ]; then
-        export CFLAGS="-m64 -O3"
-        export CXXFLAGS="-m64 -O3"
-        export LDFLAGS="-m64"
-        export PKG_CONFIG_PATH="/usr/lib64/pkgconfig"
-    else
-        echo -e "select a valid architecture = { i386 | amd64 }"
+        export CFLAGS="$CFLAGS -m64"
+        export CXXFLAGS="$CXXFLAGS -m64"
+        export LDFLAGS="$LDFLAGS -m64"
+        # export PKG_CONFIG_PATH="/usr/lib64/pkgconfig"
+    elif [ ! "$buildForArchitecture" == "native" ]; then
+        echo -e "select a valid architecture = { native | i386 | amd64 }"
         exit 1
     fi
 }
@@ -34,9 +41,11 @@ configureConcurrency() {
 
 configureGenerator() {
     generator="make"
-    if [ ! -z "$(which ninja)" ]; then
-        cmake_flags="$cmake_flags -GNinja"
-        generator="ninja"
+    if [ "$WANT_NINJA" == "yes" ]; then
+        if [ ! -z "$(which ninja)" ]; then
+            cmake_flags="$cmake_flags -GNinja"
+            generator="ninja"
+        fi
     fi
     generator_flags=""
     if [ ! -z "$buildJobs" ]; then
@@ -47,8 +56,10 @@ configureGenerator() {
 }
 
 configureCompiler() {
-   if [ ! -z "$(which clang++)" ]; then
-        cmake_flags="$cmake_flags -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang"
+    if [ "$WANT_CLANG" == "yes" ]; then
+        if [ ! -z "$(which clang++)" ]; then
+            cmake_flags="$cmake_flags -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang"
+        fi
     fi
 }
 
