@@ -263,3 +263,7 @@ void lib::repository::Version::dump() {
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
 }
+
+void lib::repository::Version::commit() {
+  this->dump();
+}

@@ -26,6 +26,7 @@ namespace lib::repository {
     bool containsPackage(std::string package);
 
     std::string toString();
+    void commit();
   };
 }
 

@@ -46,6 +46,7 @@ namespace lib::repository {
     std::string getLicense();
 
     std::string toString();
+    void commit();
   };
 }
 

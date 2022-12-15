@@ -23,17 +23,14 @@ std::string lib::repository::Platform::getPackage(long unsigned int which) {
 
 void lib::repository::Platform::addPackage(std::string package) {
   this->packages->add(package);
-  this->dump();
 }
 
 void lib::repository::Platform::deletePackage(std::string package) {
   this->packages->del(package);
-  this->dump();
 }
 
 void lib::repository::Platform::renamePackage(std::string package, std::string newname) {
   this->packages->set(package, newname);
-  this->dump();
 }
 
 bool lib::repository::Platform::containsPackage(std::string package) {
@@ -62,4 +59,8 @@ void lib::repository::Platform::dump() {
   document["packages"] = this->packages->dump();
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
+}
+
+void lib::repository::Platform::commit() {
+  this->dump();
 }

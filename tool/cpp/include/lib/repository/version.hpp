@@ -84,6 +84,7 @@ namespace lib::repository {
     void deleteDependency(std::string dependency);
 
     std::string toString();
+    void commit();
   };
 }
 

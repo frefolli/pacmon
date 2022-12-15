@@ -26,6 +26,7 @@ namespace lib::repository {
     bool containsPlatform(std::string platform);
 
     std::string toString();
+    void commit();
   };
 }
 

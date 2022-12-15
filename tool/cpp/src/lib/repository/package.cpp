@@ -24,17 +24,14 @@ lib::types::Semver lib::repository::Package::getVersion(long unsigned int which)
 
 void lib::repository::Package::addVersion(lib::types::Semver version) {
   this->versions->add(version);
-  this->dump();
 }
 
 void lib::repository::Package::deleteVersion(lib::types::Semver version) {
   this->versions->del(version);
-  this->dump();
 }
 
 void lib::repository::Package::renameVersion(lib::types::Semver version, lib::types::Semver newname) {
   this->versions->set(version, newname);
-  this->dump();
 }
 
 bool lib::repository::Package::containsVersion(lib::types::Semver version) {
@@ -51,17 +48,14 @@ std::string lib::repository::Package::getDependency(long unsigned int which) {
 
 void lib::repository::Package::addDependency(std::string dependency) {
   this->depends->add(dependency);
-  this->dump();
 }
 
 void lib::repository::Package::deleteDependency(std::string dependency) {
   this->depends->del(dependency);
-  this->dump();
 }
 
 void lib::repository::Package::renameDependency(std::string dependency, std::string newname) {
   this->depends->set(dependency, newname);
-  this->dump();
 }
 
 bool lib::repository::Package::containsDependency(std::string dependency) {
@@ -132,4 +126,8 @@ void lib::repository::Package::dump() {
   
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
+}
+
+void lib::repository::Package::commit() {
+  this->dump();
 }

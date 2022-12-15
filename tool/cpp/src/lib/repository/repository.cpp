@@ -22,17 +22,14 @@ std::string lib::repository::Repository::getPlatform(long unsigned int which) {
 
 void lib::repository::Repository::addPlatform(std::string platform) {
   this->platforms->add(platform);
-  this->dump();
 }
 
 void lib::repository::Repository::deletePlatform(std::string platform) {
   this->platforms->del(platform);
-  this->dump();
 }
 
 void lib::repository::Repository::renamePlatform(std::string platform, std::string newname) {
   this->platforms->set(platform, newname);
-  this->dump();
 }
 
 bool lib::repository::Repository::containsPlatform(std::string platform) {
@@ -64,4 +61,8 @@ void lib::repository::Repository::dump() {
   document["platforms"] = this->platforms->dump();
   std::ofstream output; output.open(this->getIndexPath());
   output << document; output.close();
+}
+
+void lib::repository::Repository::commit() {
+  this->dump();
 }
