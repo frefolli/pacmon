@@ -21,8 +21,99 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+    # Run CodeCheker
+  codechecker:
+    environment:
+      name: codechecker
+    runs-on: ubuntu-latest
+    steps:
+      # Install things into ubuntu
+      - name:
+        run: |
+          sudo apt update
+          sudo apt install -y cmake libboost-all-dev libyaml-cpp-dev
+
+      # Check YOUR project out!
+      - name: "Check out repository"
+        uses: actions/checkout@v2
+
+      # Prepare a build
+      - name: "Prepare build"
+        run: |
+          mkdir -pv tool/cpp/Build
+          cd tool/cpp/Build
+          cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=OFF
+
+      # Run the analysis
+      - uses: whisperity/codechecker-analysis-action@v1
+        id: codechecker
+        with:
+          build-command: "cd ${{ github.workspace }}/tool/cpp/Build; cmake --build ."
+
+      # Upload the results to the CI.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "CodeChecker Bug Reports"
+          path: ${{ steps.codechecker.outputs.result-html-dir }}
+  # Run Doxygen
+  doxygen:
+    environment:
+      name: doxygen
+    runs-on: ubuntu-latest
+    steps:
+      # Check YOUR project out!
+      - name: "Check out repository"
+        uses: actions/checkout@v2
+
+        # Runs doxygen
+      - uses: mattnotmitt/doxygen-action@v1.9.5
+        with:
+          working-directory: 'tool/cpp'
+          doxyfile-path: 'Doxyfile'
+
+            # Upload the results to the CI.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "Doxygen HTML Documentation"
+          path: tool/cpp/html
+  # Single deploy job since we're just deploying
+  cross-compile-cpp-amd64:
+    environment:
+      name: cross-compile-cpp-amd64
+    runs-on: ubuntu-latest
+    steps:
+      # Check YOUR project out!
+      - name: "Check out repository"
+        uses: actions/checkout@v2
+
+      # Apply requirements on ubuntu
+      - name: "Install requirements"
+        run: |
+          sudo apt update
+          sudo apt install -y cmake:amd64 libboost-all-dev:amd64 libyaml-cpp-dev:amd64
+
+      # Compile for amd64
+      - name: "Compile for amd64"
+        run: |
+          cd tool/cpp
+          bash build.sh
+
+      # Package
+      - name: "Package"
+        run: |
+          cd tool/cpp
+          mkdir -p pacmon-cpp-amd64/usr/bin
+          cp build/src/main/main pacmon-cpp-amd64/usr/bin/pacmon
+          tar cfz pacmon-cpp-amd64.tar.gz pacmon-cpp-amd64
+
+      # Upload the results to the CI.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pacmon-cpp-amd64
+          path: tool/cpp/pacmon-cpp-amd64.tar.gz
   # Single deploy job since we're just deploying
   deploy:
+    needs: [codechecker, doxygen, cross-compile-cpp-amd64]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -30,9 +121,18 @@ jobs:
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
       - name: Create Static Dist Directory
         run: | 
-          mkdir static
+          mkdir -p static/binaries
+          cp -r pacmon-cpp-amd64/pacmon-cpp-amd64.tar.gz static/binaries/pacmon-cpp-amd64.tar.gz
+          
+          mkdir -p static/doxygen
+          cp -r doxygen/* static/doxygen
+          
+          mkdir -p static/cppchecker
+          cp -r cppchecker/* static/cppchecker
       - name: Configure Pages
         uses: actions/configure-pages@v2
       - name: Zip and Upload Artifact
