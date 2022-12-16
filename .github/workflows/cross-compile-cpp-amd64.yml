@@ -11,7 +11,7 @@ on:
 
 jobs:
   # Single deploy job since we're just deploying
-  codechecker:
+  cross-compile-cpp-amd64:
     environment:
       name: cross-compile-cpp-amd64
     runs-on: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
       - name: "Install requirements"
         run: |
           sudo apt update
-          sudo apt install -y cmake:amd64 libboost-all-dev:amd64 libboost-all-dev:amd64
+          sudo apt install -y cmake:amd64 libboost-all-dev:amd64 libyaml-dev:amd64
 
       # Compile for amd64
       - name: "Compile for amd64"
