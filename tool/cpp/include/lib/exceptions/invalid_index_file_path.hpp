@@ -14,7 +14,7 @@ namespace lib::exceptions {
             InvalidIndexFilePath(std::string context, std::string indexFilePath);
             std::string getContext();
             std::string getIndexFilePath();
-    }
+    };
 }
 
 #endif

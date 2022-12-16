@@ -1,6 +1,6 @@
 #include<lib/types/semver_list.hpp>
 #include<boost/algorithm/string/join.hpp>
-#include<lib/exceptions/index_out_of_boud.hpp>
+#include<lib/exceptions/index_out_of_bound.hpp>
 #include<lib/exceptions/item_not_found.hpp>
 #include<lib/exceptions/item_already_there.hpp>
 

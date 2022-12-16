@@ -1,0 +1,45 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["master"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # Single deploy job since we're just deploying
+  codechecker:
+    environment:
+      name: codechecker
+    runs-on: ubuntu-latest
+    steps:
+      # Install things into ubuntu
+      - name:
+        run |
+          sudo apt install cmake libboost-all-dev libyaml-cpp-dev
+
+      # Check YOUR project out!
+      - name: "Check out repository"
+        uses: actions/checkout@v2
+
+      # Prepare a build
+      - name: "Prepare build"
+        run: |
+          mkdir -pv tool/cpp/Build
+          cd tool/cpp/Build
+          cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=OFF
+
+      # Run the analysis
+      - uses: whisperity/codechecker-analysis-action@v1
+        id: codechecker
+        with:
+          build-command: "cd ${{ github.workspace }}/tool/cpp/Build; cmake --build ."
+
+      # Upload the results to the CI.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "CodeChecker Bug Reports"
+          path: ${{ steps.codechecker.outputs.result-html-dir }}

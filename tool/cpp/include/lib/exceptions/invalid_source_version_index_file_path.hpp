@@ -9,7 +9,7 @@ namespace lib::exceptions {
     class InvalidSourceVersionIndexFilePath : public InvalidIndexFilePath {
         public:
             InvalidSourceVersionIndexFilePath(std::string indexFilePath);
-    }
+    };
 }
 
 #endif

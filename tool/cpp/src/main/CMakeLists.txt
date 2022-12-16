@@ -4,5 +4,6 @@ target_include_directories(main
     PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 target_link_libraries(main
-    libsource librepository libtypes
+    libsource librepository
+    libtypes libexceptions
     yaml-cpp ${Boost_LIBRARIES})

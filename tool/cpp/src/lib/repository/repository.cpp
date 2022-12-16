@@ -1,7 +1,7 @@
 #include<lib/repository/repository.hpp>
 #include<yaml-cpp/yaml.h>
 #include<fstream>
-#include<lib/exceptions/invalid_repository_repository_index_file_path.hpp>
+#include<lib/exceptions/invalid_repository_index_file_path.hpp>
 
 lib::repository::Repository::Repository(std::string path) : lib::types::IndexFile(path) {
   this->load();

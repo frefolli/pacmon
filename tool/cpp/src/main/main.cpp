@@ -50,7 +50,7 @@ int main(int argc, char** args) {
 	     lib::repository::Package, lib::repository::Version>
       (path + "/repository");
   
-  } catch(std::exception error) {
-    println(error.what());
+  } catch(std::runtime_error error) {
+    println((&error)->what());
   }
 }
