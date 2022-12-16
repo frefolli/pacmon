@@ -36,11 +36,12 @@ jobs:
       - name: "Package"
         run: |
           cd tool/cpp
-          mkdir -p dist/usr/bin
-          cp build/src/main/main pacmon-1.0.0-amd64/usr/bin/pacmon
+          mkdir -p pacmon-cpp-amd64/usr/bin
+          cp build/src/main/main pacmon-cpp-amd64/usr/bin/pacmon
+          tar cfz pacmon-cpp-amd64.tar.gz pacmon-cpp-amd64
 
       # Upload the results to the CI.
       - uses: actions/upload-artifact@v2
         with:
-          name: "CPP AMD64 Binary"
-          path: tool/cpp/pacmon-1.0.0-amd64/usr/bin/pacmon
+          name: pacmon-cpp-amd64
+          path: tool/cpp/pacmon-cpp-amd64.tar.gz
