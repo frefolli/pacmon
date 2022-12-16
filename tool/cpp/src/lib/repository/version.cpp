@@ -2,6 +2,7 @@
 #include<lib/types/string_list.hpp>
 #include<lib/types/index_file.hpp>
 #include<fstream>
+#include<lib/exceptions/invalid_repository_version_index_file_path.hpp>
 
 lib::repository::Version::Version(std::string path) : IndexFile(path) {
   this->load();
@@ -215,7 +216,7 @@ void lib::repository::Version::load() {
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {
-    throw new std::runtime_error("couldn't load repository index file: " + this->getIndexPath() + " doesn't exists");
+    throw lib::exceptions::InvalidRepositoryVersionIndexFilePath(this->getIndexPath());
   }
 
   this->filesToInstall = new lib::types::StringList();

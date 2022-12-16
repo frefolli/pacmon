@@ -1,6 +1,8 @@
 #include<lib/types/semver_list.hpp>
 #include<boost/algorithm/string/join.hpp>
-#include<stdexcept>
+#include<lib/exceptions/index_out_of_boud.hpp>
+#include<lib/exceptions/item_not_found.hpp>
+#include<lib/exceptions/item_already_there.hpp>
 
 lib::types::SemverList::SemverList() {
   this->semvers = new std::vector<lib::types::Semver>();
@@ -25,22 +27,22 @@ lib::types::SemverList::get(long unsigned int which) {
   if (which < this->size())
     return this->semvers->at(which);
   else
-    throw new std::runtime_error("index out of bound");
+    throw lib::exceptions::IndexOutOfBound("semver list");
 }
 
 void lib::types::SemverList::set(lib::types::Semver old_, lib::types::Semver new_) {
   if (this->contains(new_))
-    throw new std::runtime_error("semver already in list");
+    throw lib::exceptions::ItemAlreadyThere("semver list", "semver");
   auto it = this->find(old_);
   if (it != this->semvers->end())
     *it = new_;
   else
-    throw new std::runtime_error("semver not found");
+    throw lib::exceptions::ItemNotFound("semver list", "semver");
 }
 
 void lib::types::SemverList::add(lib::types::Semver semver) {
   if (this->contains(semver))
-    throw new std::runtime_error("semver already in list");
+    throw lib::exceptions::ItemAlreadyThere("semver list", "semver");
   else
     this->semvers->push_back(semver);
 }
@@ -50,7 +52,7 @@ void lib::types::SemverList::del(lib::types::Semver semver) {
   if (it != this->semvers->end())
     this->semvers->erase(it);
   else
-    throw new std::runtime_error("semver not found");
+    throw lib::exceptions::ItemNotFound("semver list", "semver");
 }
 
 bool lib::types::SemverList::contains(lib::types::Semver semver) {

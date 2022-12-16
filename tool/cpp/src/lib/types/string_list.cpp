@@ -1,6 +1,8 @@
 #include<lib/types/string_list.hpp>
 #include<boost/algorithm/string/join.hpp>
-#include<stdexcept>
+#include<lib/exceptions/index_out_of_boud.hpp>
+#include<lib/exceptions/item_not_found.hpp>
+#include<lib/exceptions/item_already_there.hpp>
 
 lib::types::StringList::StringList() {
   this->strings = new std::vector<std::string>();
@@ -26,22 +28,22 @@ lib::types::StringList::get(long unsigned int which) {
   if (which < this->size())
     return this->strings->at(which);
   else
-    throw new std::runtime_error("index out of bound");
+    throw lib::exceptions::IndexOutOfBound("string list");
 }
 
 void lib::types::StringList::set(std::string old_, std::string new_) {
   if (this->contains(new_))
-    throw new std::runtime_error("string already in list");
+    throw lib::exceptions::ItemAlreadyThere("string list", "string");
   auto it = this->find(old_);
   if (it != this->strings->end())
     *it = new_;
   else
-    throw new std::runtime_error("string not found");
+    throw lib::exceptions::ItemNotFound("string list", "string");
 }
 
 void lib::types::StringList::add(std::string string) {
   if (this->contains(string))
-    throw new std::runtime_error("string already in list");
+    throw lib::exceptions::ItemAlreadyThere("string list", "string");
   else
     this->strings->push_back(string);
 }
@@ -51,7 +53,7 @@ void lib::types::StringList::del(std::string string) {
   if (it != this->strings->end())
     this->strings->erase(it);
   else
-    throw new std::runtime_error("string not found");
+    throw lib::exceptions::ItemNotFound("string list", "string");
 }
 
 bool lib::types::StringList::contains(std::string string) {

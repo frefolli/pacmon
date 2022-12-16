@@ -1,13 +1,5 @@
-#include<lib/source/source.hpp>
-#include<lib/source/platform.hpp>
-#include<lib/source/package.hpp>
-#include<lib/source/version.hpp>
-
-#include<lib/repository/repository.hpp>
-#include<lib/repository/platform.hpp>
-#include<lib/repository/package.hpp>
-#include<lib/repository/version.hpp>
-
+#include<lib/source.hpp>
+#include<lib/repository.hpp>
 #include<stdexcept>
 #include<iostream>
 #include<filesystem>
@@ -58,7 +50,7 @@ int main(int argc, char** args) {
 	     lib::repository::Package, lib::repository::Version>
       (path + "/repository");
   
-  } catch(std::runtime_error* error) {
-    println(error->what());
+  } catch(std::exception error) {
+    println(error.what());
   }
 }

@@ -1,8 +1,7 @@
 #include<lib/repository/repository.hpp>
 #include<yaml-cpp/yaml.h>
 #include<fstream>
-#include<stdexcept>
-#include<algorithm>
+#include<lib/exceptions/invalid_repository_repository_index_file_path.hpp>
 
 lib::repository::Repository::Repository(std::string path) : lib::types::IndexFile(path) {
   this->load();
@@ -47,7 +46,7 @@ void lib::repository::Repository::load() {
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {
-    throw new std::runtime_error("couldn't load repository index file: " + this->getIndexPath() + " doesn't exists");
+    throw lib::exceptions::InvalidRepositoryIndexFilePath(this->getIndexPath());
   }
 
   this->platforms = new lib::types::StringList();

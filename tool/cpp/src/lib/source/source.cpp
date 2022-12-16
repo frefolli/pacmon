@@ -1,8 +1,8 @@
 #include<lib/source/source.hpp>
 #include<yaml-cpp/yaml.h>
 #include<fstream>
-#include<stdexcept>
 #include<algorithm>
+#include<lib/exceptions/invalid_source_index_file_path.hpp>
 
 lib::source::Source::Source(std::string path) : lib::types::IndexFile(path) {
   this->load();
@@ -47,7 +47,7 @@ void lib::source::Source::load() {
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {
-    throw new std::runtime_error("couldn't load source index file: " + this->getIndexPath() + " doesn't exists");
+    throw lib::exceptions::InvalidSourceIndexFilePath(this->getIndexPath());
   }
 
   this->platforms = new lib::types::StringList();

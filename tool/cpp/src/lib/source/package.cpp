@@ -1,9 +1,8 @@
 #include<lib/source/package.hpp>
 #include<yaml-cpp/yaml.h>
-#include<boost/algorithm/string/join.hpp>
 #include<fstream>
-#include<stdexcept>
 #include<algorithm>
+#include<lib/exceptions/invalid_source_package_index_file_path.hpp>
 
 lib::source::Package::Package(std::string path) : lib::types::IndexFile(path) {
   this->load();
@@ -101,7 +100,7 @@ void lib::source::Package::load() {
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {
-    throw new std::runtime_error("");
+    throw lib::exceptions::InvalidSourcePackageIndexFilePath(this->getIndexPath());
   }
 
   this->versions = new lib::types::SemverList();

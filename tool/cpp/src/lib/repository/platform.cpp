@@ -1,9 +1,7 @@
 #include<lib/repository/platform.hpp>
 #include<yaml-cpp/yaml.h>
-#include<boost/algorithm/string/join.hpp>
 #include<fstream>
-#include<stdexcept>
-#include<algorithm>
+#include<lib/exceptions/invalid_repository_platform_index_file_path.hpp>
 
 lib::repository::Platform::Platform(std::string path) : lib::types::IndexFile(path) {
   this->load();
@@ -48,7 +46,7 @@ void lib::repository::Platform::load() {
   try {
     document = YAML::LoadFile(this->getIndexPath());
   } catch(...) {
-    throw new std::runtime_error("repository platform index file doesn't exists");
+    throw lib::exceptions::InvalidRepositoryPlatformIndexFilePath(this->getIndexPath());
   }
   this->packages = new lib::types::StringList();
   this->packages->load(document["packages"]);
