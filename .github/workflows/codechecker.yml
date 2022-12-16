@@ -19,7 +19,7 @@ jobs:
       # Install things into ubuntu
       - name:
         run: |
-          sudo apt install cmake libboost-all-dev libyaml-cpp-dev
+          sudo apt install cmake libboost-all-dev libyaml-cpp libyaml-cpp-dev
 
       # Check YOUR project out!
       - name: "Check out repository"
