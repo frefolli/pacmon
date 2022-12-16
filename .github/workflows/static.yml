@@ -53,7 +53,7 @@ jobs:
       # Upload the results to the CI.
       - uses: actions/upload-artifact@v2
         with:
-          name: "CodeChecker Bug Reports"
+          name: codechecker
           path: ${{ steps.codechecker.outputs.result-html-dir }}
   # Run Doxygen
   doxygen:
@@ -74,10 +74,10 @@ jobs:
             # Upload the results to the CI.
       - uses: actions/upload-artifact@v2
         with:
-          name: "Doxygen HTML Documentation"
+          name: doxygen
           path: tool/cpp/html
   # Single deploy job since we're just deploying
-  cross-compile-cpp-amd64:
+  pacmon-cpp-amd64:
     environment:
       name: cross-compile-cpp-amd64
     runs-on: ubuntu-latest
@@ -113,7 +113,7 @@ jobs:
           path: tool/cpp/pacmon-cpp-amd64.tar.gz
   # Single deploy job since we're just deploying
   deploy:
-    needs: [codechecker, doxygen, cross-compile-cpp-amd64]
+    needs: [codechecker, doxygen, pacmon-cpp-amd64]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -131,8 +131,8 @@ jobs:
           mkdir -p static/doxygen
           cp -r doxygen/* static/doxygen
           
-          mkdir -p static/cppchecker
-          cp -r cppchecker/* static/cppchecker
+          mkdir -p static/codechecker
+          cp -r codechecker/* static/codechecker
       - name: Configure Pages
         uses: actions/configure-pages@v2
       - name: Zip and Upload Artifact
