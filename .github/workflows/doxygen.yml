@@ -4,7 +4,7 @@ name: Run Doxygen on cpp codebase
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["master"]
+    branches: []
 
     # Allows you to run this workflow manually from the Actions tab
     workflow_dispatch:
