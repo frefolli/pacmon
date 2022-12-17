@@ -31,12 +31,12 @@ namespace lib::source {
     void forkPlatform(std::string platform, std::string clonename);
 
     // access
-    PlatformWorker* getPlatformWorker(std::string platform);
+    PlatformWorker getPlatformWorker(std::string platform);
             
-    PackageWorker* getPackageWorker(std::string platform,
+    PackageWorker getPackageWorker(std::string platform,
 				    std::string package);
 
-    VersionWorker* getVersionWorker(std::string platform,
+    VersionWorker getVersionWorker(std::string platform,
 				    std::string package,
 				    std::string version);
   };
