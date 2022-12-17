@@ -1,8 +1,8 @@
 #include<lib/source.hpp>
 #include<lib/repository.hpp>
+#include<lib/system.hpp>
 #include<stdexcept>
 #include<iostream>
-#include<filesystem>
 
 template<class T>
 void println(T obj) {
@@ -36,10 +36,10 @@ void someTree(std::string path) {
 
 int main(int argc, char** args) {
   try {
-    std::string path = std::filesystem::current_path().string();
+    std::string path = lib::system::FileManager::getWorkingDirectory();
     if (argc > 1) {
-      path = std::filesystem::absolute(std::filesystem::path(std::string(args[1]))).string();
-      if (! std::filesystem::exists(std::filesystem::path(path)))
+      path = std::string(args[1]);
+      if (! lib::system::FileManager::existsFile(path))
 	    throw std::runtime_error("folder <" + path + "> passed as argument doesn't exists");
     }
 
