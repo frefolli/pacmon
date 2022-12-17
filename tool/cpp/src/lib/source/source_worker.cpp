@@ -1,13 +1,15 @@
 #include <lib/source/source_worker.hpp>
+#include <lib/source/source.hpp>
 #include <stdexcept>
 #include <fstream>
+#include <filesystem>
 
 lib::source::SourceWorker::SourceWorker(std::string path) {
   this->path = path;
 }
 
 lib::source::SourceWorker::SourceWorker() {
-  this->std::filesystem::current_path().string();
+  this->path = std::filesystem::current_path().string();
 }
 
 lib::source::SourceWorker::~SourceWorker() {
@@ -19,7 +21,7 @@ void lib::source::SourceWorker::doInit() {
   if (std::filesystem::exists(std::filesystem::path(this->path)))
     throw std::exception();
   std::ofstream ofs(this->path + "/index.yml"); ofs.close();
-  lib::source::Source index (this->path); index.dump();
+  lib::source::Source index (this->path); index.commit();
 }
 
 void lib::source::SourceWorker::checkCoherence() {
@@ -55,7 +57,7 @@ void lib::source::SourceWorker::addPlatform(std::string platform) {
   std::filesystem::create_directory(
     std::filesystem::path(this->path) / std::filesystem::path(platform));
   this->getPlatformWorker(platform).doInit();
-  index.dump();
+  index.commit();
 }
 
 void lib::source::SourceWorker::removePlatform(std::string platform) {
@@ -63,9 +65,9 @@ void lib::source::SourceWorker::removePlatform(std::string platform) {
     throw std::exception();
   lib::source::Source index (this->path);
   index.deletePlatform(platform);
-  std::filesystem::remove_directory(
+  std::filesystem::remove_all(
     std::filesystem::path(this->path) / std::filesystem::path(platform));
-  index.dump();
+  index.commit();
 }
 
 void lib::source::SourceWorker::renamePlatform(std::string platform, std::string newname) {
@@ -76,7 +78,7 @@ void lib::source::SourceWorker::renamePlatform(std::string platform, std::string
   std::filesystem::rename(
     std::filesystem::path(this->path) / std::filesystem::path(platform),
     std::filesystem::path(this->path) / std::filesystem::path(newname));
-  index.dump();
+  index.commit();
 }
 
 void lib::source::SourceWorker::forkPlatform(std::string platform, std::string clonename) {
@@ -89,7 +91,7 @@ void lib::source::SourceWorker::forkPlatform(std::string platform, std::string c
   std::filesystem::rename(
     std::filesystem::path(this->path) / std::filesystem::path(platform),
     std::filesystem::path(this->path) / std::filesystem::path(clonename));
-  index.dump();
+  index.commit();
 }
 
 // access
@@ -97,7 +99,7 @@ lib::source::PlatformWorker
 lib::source::SourceWorker::getPlatformWorker(std::string platform) {
   if (std::filesystem::exists(std::filesystem::path(this->path)))
     throw std::exception();
-  return new lib::source::PlatformWorker(
+  return lib::source::PlatformWorker(
     std::filesystem::path(this->path) / std::filesystem::path(platform));
 }
 

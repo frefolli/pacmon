@@ -46,12 +46,12 @@ void lib::source::PlatformWorker::forkPackage(std::string package, std::string c
 }
 
 // access
-lib::source::PackageWorker*
+lib::source::PackageWorker
 lib::source::PlatformWorker::getPackageWorker(std::string package) {
   // TODO
 }
 
-lib::source::VersionWorker*
+lib::source::VersionWorker
 lib::source::PlatformWorker::getVersionWorker(std::string package,
                                               std::string version) {
   // TODO

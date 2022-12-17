@@ -30,9 +30,9 @@ namespace lib::source {
     void forkPackage(std::string package, std::string clonename);
 
     // access
-    PackageWorker* getPackageWorker(std::string package);
+    PackageWorker getPackageWorker(std::string package);
 
-    VersionWorker* getVersionWorker(std::string package,
+    VersionWorker getVersionWorker(std::string package,
 				    std::string version);
   };
 }

@@ -86,7 +86,7 @@ void lib::source::PackageWorker::forkVersion(std::string version, std::string cl
 }
 
 // access
-lib::source::VersionWorker*
+lib::source::VersionWorker
 lib::source::PackageWorker::getVersionWorker(std::string version) {
   // TODO
 }

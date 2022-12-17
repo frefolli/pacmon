@@ -41,7 +41,7 @@ namespace lib::source {
     void forkVersion(std::string version, std::string clonename);
 
     // access
-    VersionWorker* getVersionWorker(std::string version);
+    VersionWorker getVersionWorker(std::string version);
   };
 }
 
