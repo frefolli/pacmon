@@ -6,4 +6,5 @@ target_include_directories(main
 target_link_libraries(main
     libsource librepository
     libtypes libexceptions
+    libsystem
     yaml-cpp ${Boost_LIBRARIES})
