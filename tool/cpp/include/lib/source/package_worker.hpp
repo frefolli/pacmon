@@ -3,11 +3,10 @@
 
 #include<string>
 #include<lib/source/version_worker.hpp>
+#include<lib/types/worker.hpp>
 
 namespace lib::source {
-  class PackageWorker {
-  private:
-    std::string path;
+  class PackageWorker : public lib::types::Worker {
   public:
     PackageWorker(std::string path);
     PackageWorker();

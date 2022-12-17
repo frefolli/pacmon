@@ -9,12 +9,16 @@ namespace lib::system {
             static void createFile(std::string filepath);
             static void deleteFile(std::string filepath);
             static void moveFile(std::string filepath, std::string newpath);
+            static void copyFile(std::string filepath, std::string newpath);
             static bool existsFile(std::string filepath);
             
             static void createDirectory(std::string dirpath);
             static void deleteDirectory(std::string dirpath);
+            static void copyDirectory(std::string dirpath, std::string newpath);
             static void moveDirectory(std::string dirpath, std::string newpath);
             static bool existsDirectory(std::string dirpath);
+
+            static std::string getWorkingDirectory();
     };
 }
 

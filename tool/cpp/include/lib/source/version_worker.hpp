@@ -2,11 +2,10 @@
 #define TOOL_LIB_SOURCE_VERSION_WORKER 
 
 #include<string>
+#include<lib/types/worker.hpp>
 
 namespace lib::source {
-  class VersionWorker {
-  private:
-    std::string path;
+  class VersionWorker : public lib::types::Worker {
   public:
     VersionWorker(std::string path);
     VersionWorker();

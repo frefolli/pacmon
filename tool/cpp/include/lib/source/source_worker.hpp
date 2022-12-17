@@ -5,11 +5,10 @@
 #include<lib/source/platform_worker.hpp>
 #include<lib/source/package_worker.hpp>
 #include<lib/source/version_worker.hpp>
+#include<lib/types/worker.hpp>
 
 namespace lib::source {
-  class SourceWorker {
-  private:
-    std::string path;
+  class SourceWorker : public lib::types::Worker {
   public:
     SourceWorker(std::string path);
     SourceWorker();
@@ -19,8 +18,10 @@ namespace lib::source {
     void doInit();
     void checkCoherence();
     void printAll();
-            
-    void listPlatforms(std::string platform);
+
+    std::string getPlatformPath(std::string platform);
+    
+    void listPlatforms();
             
     void addPlatform(std::string platform);
             

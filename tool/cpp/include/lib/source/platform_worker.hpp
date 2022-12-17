@@ -4,11 +4,10 @@
 #include<string>
 #include<lib/source/package_worker.hpp>
 #include<lib/source/version_worker.hpp>
+#include<lib/types/worker.hpp>
 
 namespace lib::source {
-  class PlatformWorker {
-  private:
-    std::string path;
+  class PlatformWorker : public lib::types::Worker {
   public:
     PlatformWorker(std::string path);
     PlatformWorker();
