@@ -15,16 +15,16 @@ namespace lib::source {
     // actions
     void doInit();
     void checkCoherence();
-    void printAll();
+    void printAll(unsigned int indentLevel = 0);
 
     std::string getVersionPath(std::string version);
 
-    void listVersions();
-    void listDependencies();
+    void listVersions(unsigned int indentLevel = 0);
+    void listDependencies(unsigned int indentLevel = 0);
 
-    void printLicense();
-    void printUrl();
-    void printDescription();
+    void printLicense(unsigned int indentLevel = 0);
+    void printUrl(unsigned int indentLevel = 0);
+    void printDescription(unsigned int indentLevel = 0);
 
     void setLicense(std::string license);
     void setUrl(std::string url);

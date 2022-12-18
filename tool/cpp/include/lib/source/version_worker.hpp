@@ -11,17 +11,16 @@ namespace lib::source {
     VersionWorker();
     ~VersionWorker();
 
-    // init
     void doInit();
     void checkCoherence();
-    void printAll();
+    void printAll(unsigned int indentLevel = 0);
 
-    void listFilesAsSupport();
-    void listFilesToInstall();
-    void listAllFiles();
-    void listSoftwares();
-    void listInstallCommands();
-    void listUninstallCommands();
+    void listFilesAsSupport(unsigned int indentLevel = 0);
+    void listFilesToInstall(unsigned int indentLevel = 0);
+    void listAllFiles(unsigned int indentLevel = 0);
+    void listSoftwares(unsigned int indentLevel = 0);
+    void listInstallCommands(unsigned int indentLevel = 0);
+    void listUninstallCommands(unsigned int indentLevel = 0);
             
     void addFileAsSupport(std::string file);
     void addFileToInstall(std::string file);

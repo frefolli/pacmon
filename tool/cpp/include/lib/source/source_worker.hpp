@@ -17,11 +17,11 @@ namespace lib::source {
     // actions
     void doInit();
     void checkCoherence();
-    void printAll();
+    void printAll(unsigned int indentLevel = 0);
 
     std::string getPlatformPath(std::string platform);
     
-    void listPlatforms();
+    void listPlatforms(unsigned int indentLevel = 0);
             
     void addPlatform(std::string platform);
             

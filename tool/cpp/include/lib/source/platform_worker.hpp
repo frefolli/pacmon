@@ -16,11 +16,11 @@ namespace lib::source {
     // actions
     void doInit();
     void checkCoherence();
-    void printAll();
+    void printAll(unsigned int indentLevel = 0);
 
     std::string getPackagePath(std::string package);
             
-    void listPackages();
+    void listPackages(unsigned int indentLevel = 0);
             
     void addPackage(std::string package);
             
