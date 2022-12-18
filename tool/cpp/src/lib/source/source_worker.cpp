@@ -52,8 +52,8 @@ void lib::source::SourceWorker::addPlatform(std::string platform) {
     throw std::exception();
   lib::source::Source index (getPath());
   index.addPlatform(platform);
-  lib::system::FileManager::createDirectory(getPath() + "/" + platform);
-  this->getPlatformWorker(platform).doInit();
+  lib::system::FileManager::createDirectory(getPlatformPath(platform));
+  getPlatformWorker(platform).doInit();
   index.commit();
 }
 
@@ -62,7 +62,7 @@ void lib::source::SourceWorker::removePlatform(std::string platform) {
     throw std::exception();
   lib::source::Source index (getPath());
   index.deletePlatform(platform);
-  lib::system::FileManager::deleteDirectory(getPath() + "/" + platform);
+  lib::system::FileManager::deleteDirectory(getPlatformPath(platform));
   index.commit();
 }
 
@@ -72,8 +72,8 @@ void lib::source::SourceWorker::renamePlatform(std::string platform,
     throw std::exception();
   lib::source::Source index (getPath());
   index.renamePlatform(platform, newname);
-  lib::system::FileManager::moveDirectory(getPath() + "/" + platform,
-                                          getPath() + "/" + newname);
+  lib::system::FileManager::moveDirectory(getPlatformPath(platform),
+                                          getPlatformPath(newname));
   index.commit();
 }
 
@@ -85,8 +85,8 @@ void lib::source::SourceWorker::forkPlatform(std::string platform,
   if (! index.containsPlatform(platform))
     throw std::exception();
   index.addPlatform(clonename);
-  lib::system::FileManager::copyDirectory(getPath() + "/" + platform,
-                                          getPath() + "/" + clonename);
+  lib::system::FileManager::copyDirectory(getPlatformPath(platform),
+                                          getPlatformPath(clonename));
   index.commit();
 }
 
@@ -94,7 +94,7 @@ lib::source::PlatformWorker
 lib::source::SourceWorker::getPlatformWorker(std::string platform) {
   if (lib::system::FileManager::existsFile(getPath()))
     throw std::exception();
-  return lib::source::PlatformWorker(getPath() + "/" + platform);
+  return lib::source::PlatformWorker(getPlatformPath(platform));
 }
 
 lib::source::PackageWorker
@@ -102,8 +102,8 @@ lib::source::SourceWorker::getPackageWorker(std::string platform,
                                             std::string package) {
   if (lib::system::FileManager::existsFile(getPath()))
     throw std::exception();
-  return lib::source::PlatformWorker(getPath() + "/" + platform)
-                                  .getPackageWorker(package);
+  return getPlatformWorker(platform)
+          .getPackageWorker(package);
 }
 
 lib::source::VersionWorker
@@ -112,6 +112,6 @@ lib::source::SourceWorker::getVersionWorker(std::string platform,
                                             std::string version) {
   if (lib::system::FileManager::existsFile(getPath()))
     throw std::exception();
-  return lib::source::PlatformWorker(getPath() + "/" + platform)
-                        .getVersionWorker(package, version);
+  return getPlatformWorker(platform)
+          .getVersionWorker(package, version);
 }

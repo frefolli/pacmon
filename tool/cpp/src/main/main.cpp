@@ -3,6 +3,7 @@
 #include<lib/system.hpp>
 #include<stdexcept>
 #include<iostream>
+#include<regex>
 
 template<class T>
 void println(T obj) {
@@ -34,7 +35,7 @@ void someTree(std::string path) {
   delete root;
 }
 
-int main(int argc, char** args) {
+void doTree(int argc, char** args) {
   try {
     std::string path = lib::system::FileManager::getWorkingDirectory();
     if (argc > 1) {
@@ -53,4 +54,8 @@ int main(int argc, char** args) {
   } catch(std::runtime_error& error) {
     println((&error)->what());
   }
+}
+
+int main(int argc, char** args) {
+  doTree(argc, args);
 }

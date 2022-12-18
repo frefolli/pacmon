@@ -1,35 +1,54 @@
 #include <lib/source/package_worker.hpp>
+#include <lib/source/package.hpp>
+#include <stdexcept>
+#include <lib/system/file_manager.hpp>
 
-lib::source::PackageWorker::PackageWorker(std::string path) {
-  // TODO
-}
+lib::source::PackageWorker::PackageWorker(std::string path)
+: lib::types::Worker(path) {}
 
-lib::source::PackageWorker::PackageWorker() {
-  // TODO
-}
+lib::source::PackageWorker::PackageWorker()
+: lib::types::Worker() {}
 
-lib::source::PackageWorker::~PackageWorker() {
-  // TODO
-}
+lib::source::PackageWorker::~PackageWorker() {}
 
 // actions
 void lib::source::PackageWorker::doInit() {
-  // TODO
+  if (lib::system::FileManager::existsFile(getPath()))
+    throw std::exception();
+  lib::system::FileManager::createFile(getIndexPath());
+  lib::source::Package index (getPath()); index.commit();
 }
 
 void lib::source::PackageWorker::checkCoherence() {
+  if (lib::system::FileManager::existsFile(getPath()))
+    throw std::exception();
+  lib::source::Package index (getPath());
   // TODO
 }
 
 void lib::source::PackageWorker::printAll() {
+  if (lib::system::FileManager::existsFile(getPath()))
+    throw std::exception();
+  lib::source::Package index (getPath());
   // TODO
 }
 
-void lib::source::PackageWorker::listVersions(std::string version) {
-  // TODO
+std::string lib::source::PackageWorker::getVersionPath(std::string version) {
+  return getPath() + "/" + version;
 }
 
-void lib::source::PackageWorker::listDependencies(std::string dependency) {
+void lib::source::PackageWorker::listVersions() {
+  if (lib::system::FileManager::existsFile(getPath()))
+    throw std::exception();
+  lib::source::Package index (getPath());
+  std::printf("\t\tsource :: versions {");
+  for (long unsigned int i = 0; i < index.getNumberOfVersions(); i++) {
+    std::printf("\t\t\t[%i] - %s\n", i, index.getVersion(i).toString().c_str());
+  }
+  std::printf("\t\t}");
+}
+
+void lib::source::PackageWorker::listDependencies() {
   // TODO
 }
 

@@ -1,4 +1,7 @@
-#include<lib/types/semver.hpp>
+#include <lib/types/semver.hpp>
+#include <regex>
+#include <stdexcept>
+#define SEMVER_REGEX "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$"
 
 lib::types::Semver::Semver(long unsigned int major,
 			   long unsigned int minor,
@@ -42,8 +45,14 @@ void lib::types::Semver::setAll(long unsigned int major,
   this->setPatch(patch);
 }
 
-void lib::types::Semver::setAll(std::string semver) {
-  this->setAll(1, 0, 0);
+void lib::types::Semver::setAll(std::string semverString) {
+  std::regex regexObject (SEMVER_REGEX); std::smatch matchObject;
+  std::regex_search(semverString, matchObject, regexObject);
+  if (matchObject.size() == 0)
+    throw std::exception();
+  this->setAll(std::stoi(matchObject[1]),
+                std::stoi(matchObject[2]),
+                std::stoi(matchObject[3]));
 }
 
 bool lib::types::Semver::operator>(Semver other) {

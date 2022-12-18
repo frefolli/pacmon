@@ -17,8 +17,10 @@ namespace lib::source {
     void doInit();
     void checkCoherence();
     void printAll();
+
+    std::string getPackagePath(std::string package);
             
-    void listPackages(std::string package);
+    void listPackages();
             
     void addPackage(std::string package);
             

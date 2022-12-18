@@ -17,8 +17,10 @@ namespace lib::source {
     void checkCoherence();
     void printAll();
 
-    void listVersions(std::string version);
-    void listDependencies(std::string dependency);
+    std::string getVersionPath(std::string version);
+
+    void listVersions();
+    void listDependencies();
 
     void printLicense();
     void printUrl();
