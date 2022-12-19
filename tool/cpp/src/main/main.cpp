@@ -1,8 +1,9 @@
 #include <lib/source/source_worker.hpp>
+#include <lib/cli/menu.hpp>
 #include <stdexcept>
 #include <iostream>
 
-int main(int argc, char** args) {
+void worker(int argc, char** args) {
   try {
     lib::source::SourceWorker* worker = NULL;
     if (argc > 1) {
@@ -17,4 +18,15 @@ int main(int argc, char** args) {
   } catch(std::exception& error) {
     std::cout << args[0] << ":: panic = " << error.what() << std::endl;
   }
+}
+
+void cli(int argc, char** args) {
+  lib::cli::Menu menu;
+  menu.setName("tool");
+  menu.parseArgs(argc, args);
+}
+
+int main(int argc, char** args) {
+  worker(argc, args);
+  // cli(argc, args);
 }
