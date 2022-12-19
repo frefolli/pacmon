@@ -2,33 +2,42 @@
 #include <lib/source/platform.hpp>
 #include <stdexcept>
 #include <lib/system/file_manager.hpp>
-#include <lib/exceptions/invalid_source_platform_index_file_path.hpp>
+#include <lib/exceptions/invalid_worker_path.hpp>
+#include <lib/config/config.hpp>
 
 lib::source::PlatformWorker::PlatformWorker(std::string path)
-: lib::types::Worker(path) {}
+: lib::types::Worker(path) {
+    doInit();
+}
 
 lib::source::PlatformWorker::PlatformWorker()
-: lib::types::Worker() {}
+: lib::types::Worker() {
+    doInit();
+}
 
 lib::source::PlatformWorker::~PlatformWorker() {}
 
 void lib::source::PlatformWorker::doInit() {
-  if (lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
-  lib::system::FileManager::createFile(getIndexPath());
-  lib::source::Platform index (getPath()); index.commit();
+  try {
+    if (! lib::system::FileManager::existsFile(getPath())) {
+      if (lib::config::alwaysInit) {
+        lib::system::FileManager::createFile(getIndexPath());
+        lib::source::Platform index (getPath()); index.commit();
+      } else {
+        throw lib::exceptions::InvalidWorkerPath(getPath());
+      }
+    }
+  } catch(...) {
+    throw lib::exceptions::InvalidWorkerPath(getPath());
+  }
 }
 
 void lib::source::PlatformWorker::checkCoherence() {
-  if (! lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
   lib::source::Platform index (getPath());
   // TODO
 }
 
 void lib::source::PlatformWorker::printAll(unsigned int indentLevel) {
-  if (! lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
   lib::source::Platform index (getPath());
   std::string indentation (indentLevel, '\t');
   std::printf("%ssource :: platform = {\n", indentation.c_str());
@@ -44,8 +53,6 @@ std::string lib::source::PlatformWorker::getPackagePath(std::string package) {
 }
 
 void lib::source::PlatformWorker::listPackages(unsigned int indentLevel) {
-  if (! lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
   lib::source::Platform index (getPath());
   std::string indentation (indentLevel, '\t');
   std::printf("%ssource :: packages = {\n", indentation.c_str());
@@ -56,8 +63,6 @@ void lib::source::PlatformWorker::listPackages(unsigned int indentLevel) {
 }
 
 void lib::source::PlatformWorker::addPackage(std::string package) {
-  if (! lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
   lib::source::Platform index (getPath());
   index.addPackage(package);
   lib::system::FileManager::createDirectory(getPackagePath(package));
@@ -66,8 +71,6 @@ void lib::source::PlatformWorker::addPackage(std::string package) {
 }
 
 void lib::source::PlatformWorker::removePackage(std::string package) {
-  if (! lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
   lib::source::Platform index (getPath());
   index.deletePackage(package);
   lib::system::FileManager::deleteDirectory(getPackagePath(package));
@@ -76,8 +79,6 @@ void lib::source::PlatformWorker::removePackage(std::string package) {
 
 void lib::source::PlatformWorker::renamePackage(std::string package,
                                                 std::string newname) {
-  if (! lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
   lib::source::Platform index (getPath());
   index.renamePackage(package, newname);
   lib::system::FileManager::moveDirectory(getPackagePath(package),
@@ -87,11 +88,9 @@ void lib::source::PlatformWorker::renamePackage(std::string package,
 
 void lib::source::PlatformWorker::forkPackage(std::string package,
                                               std::string clonename) {
-  if (! lib::system::FileManager::existsFile(getPath()))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
   lib::source::Platform index (getPath());
   if (! index.containsPackage(package))
-    throw lib::exceptions::InvalidSourcePlatformIndexFilePath(getPath());
+    throw std::exception();
   index.addPackage(clonename);
   lib::system::FileManager::copyDirectory(getPackagePath(package),
                                           getPackagePath(clonename));
