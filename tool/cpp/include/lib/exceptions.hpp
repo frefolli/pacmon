@@ -13,5 +13,6 @@
 #include<lib/exceptions/invalid_source_version_index_file_path.hpp>
 #include<lib/exceptions/item_already_there.hpp>
 #include<lib/exceptions/item_not_found.hpp>
+#include<lib/exceptions/invalid_worker_path.hpp>
 
 #endif

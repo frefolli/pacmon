@@ -76,7 +76,43 @@ jobs:
         with:
           name: doxygen
           path: tool/cpp/html
-  # Single deploy job since we're just deploying
+  # Cross Compile i386
+  pacmon-cpp-i386:
+    environment:
+      name: cross-compile-cpp-i386
+    runs-on: ubuntu-latest
+    steps:
+      # Check YOUR project out!
+      - name: "Check out repository"
+        uses: actions/checkout@v2
+
+      # Apply requirements on ubuntu
+      - name: "Install requirements"
+        run: |
+          dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y cmake libboost-all-dev:i386 libyaml-cpp-dev:i386
+
+      # Compile for i386
+      - name: "Compile for i386"
+        run: |
+          cd tool/cpp
+          bash build.sh
+
+      # Package
+      - name: "Package"
+        run: |
+          cd tool/cpp
+          mkdir -p pacmon-cpp-i386/usr/bin
+          cp build/src/main/main pacmon-cpp-i386/usr/bin/pacmon
+          tar cfz pacmon-cpp-i386.tar.gz pacmon-cpp-i386
+
+      # Upload the results to the CI.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pacmon-cpp-i386
+          path: tool/cpp/pacmon-cpp-i386.tar.gz
+   # Cross Compile for amd64
   pacmon-cpp-amd64:
     environment:
       name: cross-compile-cpp-amd64
@@ -90,7 +126,7 @@ jobs:
       - name: "Install requirements"
         run: |
           sudo apt update
-          sudo apt install -y cmake:amd64 libboost-all-dev:amd64 libyaml-cpp-dev:amd64
+          sudo apt install -y cmake libboost-all-dev:amd64 libyaml-cpp-dev:amd64
 
       # Compile for amd64
       - name: "Compile for amd64"
@@ -113,7 +149,7 @@ jobs:
           path: tool/cpp/pacmon-cpp-amd64.tar.gz
   # Single deploy job since we're just deploying
   deploy:
-    needs: [codechecker, doxygen, pacmon-cpp-amd64]
+    needs: [codechecker, doxygen, pacmon-cpp-i386, pacmon-cpp-amd64]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -127,6 +163,7 @@ jobs:
         run: | 
           mkdir -p static/binaries
           cp -r pacmon-cpp-amd64/pacmon-cpp-amd64.tar.gz static/binaries/pacmon-cpp-amd64.tar.gz
+          cp -r pacmon-cpp-i386/pacmon-cpp-i386.tar.gz static/binaries/pacmon-cpp-i386.tar.gz
           
           mkdir -p static/doxygen
           cp -r doxygen/* static/doxygen
