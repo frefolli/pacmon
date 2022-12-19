@@ -4,7 +4,8 @@ add_library(libexceptions STATIC
     invalid_index_file_path.cpp invalid_source_platform_index_file_path.cpp
     invalid_repository_index_file_path.cpp invalid_source_version_index_file_path.cpp
     invalid_repository_package_index_file_path.cpp item_already_there.cpp
-    invalid_repository_platform_index_file_path.cpp item_not_found.cpp)
+    invalid_repository_platform_index_file_path.cpp item_not_found.cpp
+    invalid_worker_path.cpp)
 
 target_include_directories(libexceptions PUBLIC
     ${CMAKE_SOURCE_DIR}/include)
